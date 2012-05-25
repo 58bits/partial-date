@@ -1,0 +1,29 @@
+h1. partial-date
+
+* "Homepage":https://github.com/58bits/partial-date#readme
+* "Issues":https://github.com/58bits/partial-date/issues
+* "Documentation":http://rubydoc.info/gems/partial-date/frames
+
+h2. Description
+
+TODO: Description
+
+h2. Features
+
+h2. Examples
+
+bc.
+require 'partial/date'
+
+h2. Requirements
+
+h2. Install
+
+bc.
+$ gem install partial-date
+
+h2. Copyright
+
+Copyright (c) 2012 tony
+
+See {file:LICENSE.txt} for details.
