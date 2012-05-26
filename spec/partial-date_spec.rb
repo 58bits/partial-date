@@ -80,11 +80,11 @@ describe PartialDate::Date do
     end
 
     it "should raise an error if month is set to a value greater than 12" do
-      expect {date.month = 13}.to raise_error(PartialDate::PartialDateError, "Month must be integer between 1 and 12")
+      expect {date.month = 13}.to raise_error(PartialDate::PartialDateError, "Month must an be integer between 1 and 12")
     end
 
     it "should raise an error if month is set to a value less than zero" do
-      expect {date.month = -1}.to raise_error(PartialDate::PartialDateError, "Month must be integer between 1 and 12")
+      expect {date.month = -1}.to raise_error(PartialDate::PartialDateError, "Month must an be integer between 1 and 12")
     end
 
     it "should allow the month to be set to zero" do

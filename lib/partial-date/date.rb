@@ -1,0 +1,179 @@
+
+# Public module containing Date, Error and Version types.
+module PartialDate
+
+  # Public: A class for handling partial date storage. Partial dates are stored
+  # as an 8 digit integer with optional month and day values.
+  #
+  # Examples
+  #   
+  #   date = PartialDate::Date.new
+  #   date.year = 2012
+  #   date.month = 12
+  #   date.day = 1
+  #
+  #   date = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 1}
+  #
+  #   date = PartialDate::Date.new {|d| d.year = 2012 }
+  #
+  class Date
+
+    # Public: Create a new partial date class from a block of integers
+    # or strings.
+    #
+    # Examples
+    #
+    #   # From integers
+    #   date = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 1}
+    #   date.value
+    #   # => 20121201
+    #
+    #   # From strings
+    #   date = PartialDate::Date.new {|d| d.year = "2012"; d.month = "12"; d.day = "1"}
+    #   date.value
+    #   # => 20121201
+    #
+    # Returns a date object.
+    def initialize
+      yield self if block_given?
+    end
+
+
+    # Public: Get the date value in partial_date format.
+    #
+    # Examples
+    #   date.year = "2012"
+    #   date.value
+    #   # => 20120000
+    #
+    # Returns an integer representation of a partial date.
+    def value
+      @value ||= 0
+    end
+
+
+
+    # Public: Loads an 8 digit date value into a date object.
+    #
+    # value - an 8 digit value in partial date format.
+    #
+    # Examples
+    #
+    #   date.load = 201212201
+    #   date.value
+    #   # => 20120000
+    #   date.year
+    #   # => 2012
+    #   date.month
+    #   # => 12
+    #   date.day
+    #   # => 01
+    #
+    # Returns nothing
+    def load(value)
+      if value.is_a?(Integer) && (value >= 10000 && value <= 99991231)
+        @value = value
+      else
+        raise PartialDateError, "Date value must be an integer betwen 10000 and 99991231"
+      end
+    end
+
+
+    # Public: Sets the year portion of a partial date.
+    #
+    # value - The string or integer value for a year.
+    #
+    # Examples
+    #   date.year = "2000"
+    #   date.value
+    #   # => 20000000
+    #
+    # Returns nothing  
+    def year=(value)
+
+      if value.nil?
+        raise PartialDateError, "Year cannot be nil"
+      end
+
+      if value.is_a?(String) 
+        if value =~ /\A\d{4}\z/
+          value = value.to_i
+        else
+          raise PartialDateError, "Year must be a valid four digit string or integer between 1 and 9999"
+        end
+      end
+
+      if value.is_a?(Integer) && (value <= 9999 && value > 0) 
+        @value = (self.value - self.year) * 10000 + (value * 10000) 
+      else
+        raise PartialDateError, "Year must be an integer between 1 and 9999"
+      end
+    end
+
+    # Public: Get the year from a partial date.
+    def year
+      self.value > 9999 ? (self.value / 10000).abs : 0
+    end
+
+    # Public: Set the month of a partial date.
+    def month=(value)
+
+      raise PartialDateError, "A year must be set before a month" if year == 0
+
+      value = 0 if value.nil?
+
+      if value.is_a?(String) 
+        if value =~ /\A\d{1,2}\z/ 
+          value = value.to_i
+        else
+          raise PartialDateError, "Month must be a valid one or two digit string or integer between 1 and 12"
+        end
+      end
+
+      if value.is_a?(Integer) && (value <= 12 && value >= 0)
+        @value  = self.value - (self.month * 100) + (value * 100)
+      else
+        raise PartialDateError, "Month must an be integer between 1 and 12"
+      end
+    end
+
+    # Public: Get the month from a partial date.
+    def month
+      self.value > 99 ? ((self.value - (self.value / 10000).abs * 10000) / 100).abs : 0
+    end
+
+
+    # Public: Set the day portion of a partial date. Day is optional so zero, 
+    # nil and empty strings are allowed.
+    def day=(value)
+
+      raise PartialDateError, "A year and month must be set before a day" if year == 0 && month == 0
+
+      value = 0 if value.nil?
+
+      if value.is_a?(String) 
+        if value =~ /\A\d{1,2}\z/
+          value = value.to_i
+        else
+          raise PartialDateError, "Day must be a valid one or two digit string or integer between 1 and 31"
+        end
+      end
+
+      if value.is_a?(Integer) && (value >= 0 && value <= 31)
+        begin
+          date = ::Date.civil(self.year, self.month, value) if value > 0
+          @value  = (self.value - self.day + value)
+        rescue 
+          raise PartialDateError, "Day must be a valid day for the given month"
+        end
+      else
+        raise PartialDateError, "Day must be an integer between 1 and 31"
+      end
+    end
+
+    # Public: Get the day from a partial date.
+    def day
+      self.value > 0 ? self.value - (self.value / 100).abs * 100 : 0
+    end
+  end
+end
