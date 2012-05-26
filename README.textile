@@ -24,6 +24,6 @@ $ gem install partial-date
 
 h2. Copyright
 
-Copyright (c) 2012 tony
+Copyright (c) 2012 Anthony Bouch
 
 See {file:LICENSE.txt} for details.
