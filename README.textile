@@ -13,7 +13,7 @@ h2. Features
 h2. Examples
 
 bc.
-require 'partial/date'
+require 'partial-date'
 
 h2. Requirements
 

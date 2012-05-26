@@ -1,1 +1,1 @@
---markup textile --title "partial-date Documentation" --protected
+--plugin yard-tomdoc --markup textile --title "PartialDate Documentation" --protected 

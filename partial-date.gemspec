@@ -1,14 +1,14 @@
 # -*- encoding: utf-8 -*-
 
-require File.expand_path('../lib/partial/date/version', __FILE__)
+require File.expand_path('../lib/partial-date/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name          = "partial-date"
-  gem.version       = Partial::Date::VERSION
+  gem.version       = PartialDate::VERSION
   gem.summary       = %q{TODO: Summary}
   gem.description   = %q{TODO: Description}
   gem.license       = "MIT"
-  gem.authors       = ["tony"]
+  gem.authors       = ["Anthony Bouch"]
   gem.homepage      = "https://github.com/58bits/partial-date#readme"
 
   gem.files         = `git ls-files`.split($/)

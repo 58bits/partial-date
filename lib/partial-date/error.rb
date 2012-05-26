@@ -1,0 +1,2 @@
+class PartialDateError < StandardError
+end
