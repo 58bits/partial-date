@@ -16,7 +16,7 @@ h2. Examples
 
 bc.. require 'partial-date' 
 
-#Default initializer 
+# Default initializer 
 date = PartialDate::Date.new
 # => 
 date.value
