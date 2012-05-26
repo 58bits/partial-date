@@ -18,21 +18,25 @@ bc.. require 'partial-date'
 
 #Default initializer 
 date = PartialDate::Date.new
+# => 
 date.value
 # => 0
 
 # Initialize from a block of integers
 date = PartialDate::Date.new {|d| d.year = 2012, d.month = 01}
+# => 2012-01
 date.value
 # => 20120100
 
 # Initialize from a block of strings
 date = PartialDate::Date.new {|d| d.year = "2012", d.month = "01"}
+# => 2012-01
 date.value
 # => 20120100
 
 # Initialize from the class load method - for rehydrating a date instance from a stored integer date value.
 date = PartialDate::Date.load 20121201
+# => 2012-12-01
 date.year
 # => 2012
 date.month
