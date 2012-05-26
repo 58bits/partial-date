@@ -9,6 +9,7 @@ Gem::Specification.new do |gem|
   gem.description   = "A simple date class that can be used to store partial date values in a single column/attribute. An example use case would include an archive, or catalogue entry where the complete date is unknown."
   gem.license       = "MIT"
   gem.authors       = ["Anthony Bouch"]
+  gem.email         = ["tony@58bits.com"]
   gem.homepage      = "https://github.com/58bits/partial-date#readme"
 
   gem.files         = `git ls-files`.split($/)
