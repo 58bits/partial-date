@@ -200,6 +200,7 @@ module PartialDate
         result = self.year.to_s 
         result = result + "-" + self.month.to_s if self.month > 0
         result = result + "-" + self.day.to_s if self.day > 0
+        return result
       else
         return ""
       end
