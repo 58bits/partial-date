@@ -39,9 +39,10 @@ module PartialDate
     end
 
 
-    # Public: Get the date value in partial_date format.
+    # Public: Get the integer date value in partial date format.
     #
     # Examples
+    #
     #   date.year = "2012"
     #   date.value
     #   # => 20120000
@@ -51,7 +52,20 @@ module PartialDate
       @value ||= 0
     end
 
-
+    # Public: Set a date value using an interger in partial date format.
+    #
+    # Examples
+    #
+    #   date.value = 20121200
+    #
+    # Returns nothing  
+    def value=(value)
+      if value.is_a?(Integer) && (value >= 10000 && value <= 99991231)
+        @value = value
+      else
+        raise PartialDateError, "Date value must be an integer betwen 10000 and 99991231"
+      end
+    end
 
     # Public: Loads an 8 digit date value into a date object.
     #
@@ -59,7 +73,7 @@ module PartialDate
     #
     # Examples
     #
-    #   date.load = 201212201
+    #   date = PartialDate::Date.load 201212201
     #   date.value
     #   # => 20120000
     #   date.year
@@ -67,15 +81,11 @@ module PartialDate
     #   date.month
     #   # => 12
     #   date.day
-    #   # => 01
+    #   # => 0
     #
-    # Returns nothing
-    def load(value)
-      if value.is_a?(Integer) && (value >= 10000 && value <= 99991231)
-        @value = value
-      else
-        raise PartialDateError, "Date value must be an integer betwen 10000 and 99991231"
-      end
+    # Returns date object
+    def self.load(value)
+      PartialDate::Date.new {|d| d.value = value}
     end
 
 

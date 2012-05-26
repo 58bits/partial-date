@@ -6,21 +6,47 @@ h1. partial-date
 
 h2. Description
 
-TODO: More soon... (NOTE: The gem has not been published yet.)
+A simple date class that can be used to store partial date values in a single column/attribute. An example use case would include an archive, or catalogue entry where the complete date is unknown.
 
 h2. Features
 
+PartialDate::Date uses an 8 digit integer to store year, month and day values. Values for month and day are optional.
+
 h2. Examples
 
-bc.
-require 'partial-date'
+bc.. require 'partial-date' 
 
-h2. Requirements
+#Default initializer 
+date = PartialDate::Date.new
+date.value
+# => 0
+
+# Initialize from a block of integers
+date = PartialDate::Date.new {|d| d.year = 2012, d.month = 01}
+date.value
+# => 20120100
+
+# Initialize from a block of strings
+date = PartialDate::Date.new {|d| d.year = "2012", d.month = "01"}
+date.value
+# => 20120100
+
+# Initialize from the class load method - for rehydrating a date instance from a stored integer date value.
+date = PartialDate::Date.load 20121201
+date.year
+# => 2012
+date.month
+# => 12
+date.day
+# => 1
 
 h2. Install
 
-bc.
-$ gem install partial-date
+@$ gem install partial-date@
+
+h2. TODO
+
+Implement @PartialDate::Date.parse@ method for construction from strings.
 
 h2. Copyright
 

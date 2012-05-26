@@ -24,16 +24,23 @@ describe PartialDate::Date do
     new_date.value.should == 20101201
   end
 
-  it "should allow a date value in partial date format to be loaded into a date instance" do
-    new_date = PartialDate::Date.new {|d| d.load 20120000}
+  it "should allow construction from the class load method" do
+    new_date = PartialDate::Date.load(20120000)
+    new_date.year.should == 2012
+    new_date.month.should == 0
+    new_date.day.should == 0
+  end
+
+  it "should allow a date value in partial date format to be set in a date instance" do
+    new_date = PartialDate::Date.new {|d| d.value = 20120000}
     new_date.year.should == 2012
     new_date.month.should == 0
     new_date.day.should == 0
     new_date.value.should == 20120000
   end
 
-  it "should not allow an invalid date value to be loaded into a date instance" do
-    expect {new_date = PartialDate::Date.new {|d| d.load 100000000}}.to raise_error(PartialDate::PartialDateError, "Date value must be an integer betwen 10000 and 99991231")
+  it "should not allow an invalid date value to be set in a date instance" do
+    expect {new_date = PartialDate::Date.new {|d| d.value = 100000000}}.to raise_error(PartialDate::PartialDateError, "Date value must be an integer betwen 10000 and 99991231")
   end
 
   describe "Year" do
