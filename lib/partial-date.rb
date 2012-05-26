@@ -135,7 +135,7 @@ module PartialDate
       if value.is_a?(Integer) && (value <= 12 && value >= 0)
         @value  = self.value - (self.month * 100) + (value * 100)
       else
-        raise PartialDateError, "Month must be integer between 1 and 12"
+        raise PartialDateError, "Month must an be integer between 1 and 12"
       end
     end
 
