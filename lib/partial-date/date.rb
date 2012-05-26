@@ -185,5 +185,24 @@ module PartialDate
     def day
       self.value > 0 ? self.value - (self.value / 100).abs * 100 : 0
     end
+
+    # Public: Returns a formatted string representation of the partial date.
+    #
+    # Examples
+    #   
+    #   date = PartialDate::Date.new {|d| d.year = 2012, d.month = 12, d.day = 31}
+    #   date.to_s
+    #   # => "2012-12-31"
+    #
+    # Returns string representation of date.
+    def to_s
+      if self.year > 0
+        result = self.year.to_s 
+        result = result + "-" + self.month.to_s if self.month > 0
+        result = result + "-" + self.day.to_s if self.day > 0
+      else
+        return ""
+      end
+    end
   end
 end
