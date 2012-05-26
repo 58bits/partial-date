@@ -6,7 +6,7 @@ h1. partial-date
 
 h2. Description
 
-TODO: More soon...
+TODO: More soon... (NOTE: The gem has not been published yet.)
 
 h2. Features
 
