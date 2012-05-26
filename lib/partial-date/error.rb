@@ -1,2 +1,4 @@
-class PartialDateError < StandardError
+module PartialDate
+  class PartialDateError < StandardError
+  end
 end
