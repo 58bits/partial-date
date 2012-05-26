@@ -1,8 +1,6 @@
-require File.expand_path('../partial-date/version', __FILE__)
-require File.expand_path('../partial-date/error', __FILE__)
+require 'partial-date/version'
+require 'partial-date/error'
 require 'date'
-# require 'partial-date/version'
-# require 'partial-date/error'
 
 module PartialDate
 
