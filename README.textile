@@ -6,7 +6,7 @@ h1. partial-date
 
 h2. Description
 
-TODO: Description
+TODO: More soon...
 
 h2. Features
 
