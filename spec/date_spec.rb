@@ -43,17 +43,17 @@ describe PartialDate::Date do
     expect {new_date = PartialDate::Date.new {|d| d.value = 100000000}}.to raise_error(PartialDate::PartialDateError, "Date value must be an integer betwen 10000 and 99991231")
   end
 
-  it "should return a string represntation of date in the correct format" do
+  it "should return a string representation of date in the correct format" do
     new_date = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 31}
     new_date.to_s.should match(/\A\d{4}-\d{2}-\d{2}\z/)
   end
 
-  it "should return a string represntation of a partial date in the correct format" do
+  it "should return a string representation of a partial date in the correct format" do
     new_date = PartialDate::Date.new {|d| d.year = 2012; d.month = 12}
     new_date.to_s.should match(/\A\d{4}-\d{2}\z/)
   end
 
-  it "should return a string represntation of a partial date in the correct format" do
+  it "should return a string representation of a partial date in the correct format" do
     new_date = PartialDate::Date.new {|d| d.year = 2012}
     new_date.to_s.should match(/\A\d{4}\z/)
   end
