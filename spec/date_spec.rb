@@ -184,5 +184,4 @@ describe PartialDate::Date do
         a.should be == b
     end
   end
-
 end
