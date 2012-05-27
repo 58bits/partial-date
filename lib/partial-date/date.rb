@@ -40,6 +40,29 @@ module PartialDate
       yield self if block_given?
     end
 
+    # Public: Loads an 8 digit date value into a date object. Can be used 
+    # when rehydrating a date object from a persisted partial date value.
+    #
+    # value - an 8 digit value in partial date format.
+    #
+    # Examples
+    #
+    #   date = PartialDate::Date.load 201212201
+    #   date.value
+    #   # => 20120000
+    #   date.year
+    #   # => 2012
+    #   date.month
+    #   # => 12
+    #   date.day
+    #   # => 0
+    #
+    # Returns date object
+    def self.load(value)
+      PartialDate::Date.new {|d| d.value = value}
+    end
+
+    
     # Public: Get the integer date value in partial date format.
     #
     # Examples
@@ -66,28 +89,6 @@ module PartialDate
       else
         raise PartialDateError, "Date value must be an integer betwen 10000 and 99991231"
       end
-    end
-
-    # Public: Loads an 8 digit date value into a date object. Can be used 
-    # when rehydrating a date object from a persisted partial date value.
-    #
-    # value - an 8 digit value in partial date format.
-    #
-    # Examples
-    #
-    #   date = PartialDate::Date.load 201212201
-    #   date.value
-    #   # => 20120000
-    #   date.year
-    #   # => 2012
-    #   date.month
-    #   # => 12
-    #   date.day
-    #   # => 0
-    #
-    # Returns date object
-    def self.load(value)
-      PartialDate::Date.new {|d| d.value = value}
     end
 
 
