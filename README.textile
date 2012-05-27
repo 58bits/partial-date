@@ -11,6 +11,7 @@ A simple date class that can be used to store partial date values in a single co
 h2. Features
 
 PartialDate::Date uses an 8 digit integer to store year, month and day values. Values for month and day are optional.
+Use @date.value@ to set or persist the date to persistance store. 
 
 h2. Examples
 
