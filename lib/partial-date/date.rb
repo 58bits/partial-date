@@ -50,7 +50,7 @@ module PartialDate
     #
     # Returns an integer representation of a partial date.
     def value
-      get_value(0)
+      get_value(:date)
     end
 
     # Public: Set a date value using an interger in partial date format.
@@ -62,7 +62,7 @@ module PartialDate
     # Returns nothing  
     def value=(value)
       if value.is_a?(Integer) && (value >= 10000 && value <= 99991231)
-        set_value(0, value)
+        set_value(:date, value)
       else
         raise PartialDateError, "Date value must be an integer betwen 10000 and 99991231"
       end
@@ -116,7 +116,7 @@ module PartialDate
       end
 
       if value.is_a?(Integer) && (value <= 9999 && value > 0) 
-        set_value(1, value)
+        set_value(:year, value)
       else
         raise PartialDateError, "Year must be an integer between 1 and 9999"
       end
@@ -124,7 +124,7 @@ module PartialDate
 
     # Public: Get the year from a partial date.
     def year
-      get_value(1)
+      get_value(:year)
     end
 
     # Public: Set the month of a partial date.
@@ -143,7 +143,7 @@ module PartialDate
       end
 
       if value.is_a?(Integer) && (value <= 12 && value >= 0)
-        set_value(2, value)
+        set_value(:month, value)
       else
         raise PartialDateError, "Month must an be integer between 1 and 12"
       end
@@ -151,7 +151,7 @@ module PartialDate
 
     # Public: Get the month from a partial date.
     def month
-      get_value(2)
+      get_value(:month)
     end
 
 
@@ -175,7 +175,7 @@ module PartialDate
         begin
           date = ::Date.civil(self.year, self.month, value) if value > 0
           #@value  = (self.value - self.day + value)
-          set_value(3, value)
+          set_value(:day, value)
         rescue 
           raise PartialDateError, "Day must be a valid day for the given month"
         end
@@ -187,7 +187,7 @@ module PartialDate
     # Public: Get the day from a partial date.
     def day
       #self.value > 0 ? self.value - (self.value / 100).abs * 100 : 0
-      get_value(3)
+      get_value(:day)
     end
 
     # Public: Returns a formatted string representation of the partial date.
@@ -224,7 +224,16 @@ module PartialDate
     #
     # Returns an integer value for partial date, year, month or day.
     def get_value(element)
-      @data[element]
+      case element
+      when :date
+        return @data[0]
+      when :year
+        return @data[1]
+      when :month
+        return @data[2]
+      when :day
+        return @data[3]
+      end
     end
 
     # Internal: Set a value in the array backing store - either the
@@ -234,21 +243,21 @@ module PartialDate
     # Returns nothing
     def set_value(element, value)
       case element
-      when 0
+      when :date
         @data[1] = (value / 10000).abs 
         @data[2] = ((value - (value / 10000).abs * 10000) / 100).abs
         @data[3] = value - (value / 100).abs * 100 
-      when 1
+        @data[0] = value
+      when :year
         @data[0] = @data[0] - (self.year * 10000) + (value * 10000)
-      when 2
+        @data[1] = value
+      when :month
         @data[0] = @data[0] - (self.month * 100) + (value * 100)
-      when 3
+        @data[2] = value
+      when :day
         @data[0] = @data[0] - self.day + value
+        @data[3] = value
       end 
-
-      # Important - update the old element value _after_ @data[0] 
-      # has been recalculated above.
-      @data[element] = value
     end
   end
 end
