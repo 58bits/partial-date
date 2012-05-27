@@ -9,6 +9,10 @@ describe PartialDate::Date do
     PartialDate.const_get('VERSION').should_not be_empty
   end
 
+  it "should return an empty string for an empty date" do
+    date.to_s.should == ""
+  end
+
   it "should have a readable value attribute" do
     date.year = 2000
     date.value.should == 20000000
