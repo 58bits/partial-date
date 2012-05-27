@@ -1,3 +1,7 @@
+h3. 1.1.2 / 2012-05-27
+
+* Fixed syntax error in example code from README.
+
 h3. 1.1.1 / 2012-05-27
 
 * Updated tests and documentation.
