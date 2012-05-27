@@ -52,8 +52,6 @@ h2. Install
 h2. TODO
 
 # @PartialDate::Date.parse@ method for construction from strings.
-# A Hash or Array backing store for date components for better performance.
-# Include Comparable
 
 h2. Copyright
 
