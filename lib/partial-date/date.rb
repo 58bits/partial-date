@@ -36,7 +36,7 @@ module PartialDate
     #
     # Returns a date object.
     def initialize
-      @data = [0,0,0,0]
+      @data = {:date => 0, :year => 0, :month => 0, :day => 0}
       yield self if block_given?
     end
 
@@ -224,16 +224,7 @@ module PartialDate
     #
     # Returns an integer value for partial date, year, month or day.
     def get_value(element)
-      case element
-      when :date
-        return @data[0]
-      when :year
-        return @data[1]
-      when :month
-        return @data[2]
-      when :day
-        return @data[3]
-      end
+      @data[element]
     end
 
     # Internal: Set a value in the array backing store - either the
@@ -244,20 +235,18 @@ module PartialDate
     def set_value(element, value)
       case element
       when :date
-        @data[1] = (value / 10000).abs 
-        @data[2] = ((value - (value / 10000).abs * 10000) / 100).abs
-        @data[3] = value - (value / 100).abs * 100 
-        @data[0] = value
+        @data[:year] = (value / 10000).abs 
+        @data[:month] = ((value - (value / 10000).abs * 10000) / 100).abs
+        @data[:day] = value - (value / 100).abs * 100 
       when :year
-        @data[0] = @data[0] - (self.year * 10000) + (value * 10000)
-        @data[1] = value
+        @data[:date] = @data[:date] - (self.year * 10000) + (value * 10000)
       when :month
-        @data[0] = @data[0] - (self.month * 100) + (value * 100)
-        @data[2] = value
+        @data[:date] = @data[:date] - (self.month * 100) + (value * 100)
       when :day
-        @data[0] = @data[0] - self.day + value
-        @data[3] = value
+        @data[:date] = @data[:date] - self.day + value
       end 
+
+      @data[element] = value
     end
   end
 end
