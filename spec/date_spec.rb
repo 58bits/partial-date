@@ -164,4 +164,25 @@ describe PartialDate::Date do
       date.day.should == 10
     end
   end
+
+  describe "Comparisons" do
+    it "should determine if one date is greater than another" do
+        a = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 31}
+        b = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 30}
+        a.should be > b
+    end
+
+    it "should determine if one date is less than another" do
+        a = PartialDate::Date.new {|d| d.year = 2012; d.month = 0; d.day = 0}
+        b = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 30}
+        a.should be < b
+    end
+
+    it "should determine if one date is equal to another" do
+        a = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 30}
+        b = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 30}
+        a.should be == b
+    end
+  end
+
 end
