@@ -1,4 +1,5 @@
 require 'partial-date/version'
 require 'partial-date/error'
+require 'partial-date/bits'
 require 'partial-date/date'
 require 'date'

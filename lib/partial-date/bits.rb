@@ -2,11 +2,10 @@ module PartialDate
 
   class Bits
 
-
     # Key:
     #   The firt 5 bits are the day (max 31)
     #   The next 4 bits are the month (max 12)
-    #   The topmost 14 bits are the year (max 9999)
+    #   The topmost/leftmost 14 bits are the year (max 9999)
 
     DAY_MASK = 0b00000000000000000011111
     MONTH_MASK = 0b00000000000000111100000

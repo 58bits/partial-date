@@ -36,7 +36,7 @@ module PartialDate
     #
     # Returns a date object.
     def initialize
-      @data = {:date => 0, :year => 0, :month => 0, :day => 0}
+      @bits = 0
       yield self if block_given?
     end
 
@@ -62,7 +62,7 @@ module PartialDate
       PartialDate::Date.new {|d| d.value = value}
     end
 
-    
+
     # Public: Get the integer date value in partial date format.
     #
     # Examples
@@ -73,7 +73,7 @@ module PartialDate
     #
     # Returns an integer representation of a partial date.
     def value
-      get_value(:date)
+      Bits.get_date(@bits)
     end
 
     # Public: Set a date value using an interger in partial date format.
@@ -85,7 +85,7 @@ module PartialDate
     # Returns nothing  
     def value=(value)
       if value.is_a?(Integer) && (value >= 10000 && value <= 99991231)
-        set_value(:date, value)
+        @bits = Bits.set_date(@bits, value)
       else
         raise PartialDateError, "Date value must be an integer betwen 10000 and 99991231"
       end
@@ -117,7 +117,7 @@ module PartialDate
       end
 
       if value.is_a?(Integer) && (value <= 9999 && value > 0) 
-        set_value(:year, value)
+        @bits = Bits.set_year(@bits, value)
       else
         raise PartialDateError, "Year must be an integer between 1 and 9999"
       end
@@ -125,7 +125,7 @@ module PartialDate
 
     # Public: Get the year from a partial date.
     def year
-      get_value(:year)
+      Bits.get_year(@bits)
     end
 
     # Public: Set the month of a partial date.
@@ -144,7 +144,7 @@ module PartialDate
       end
 
       if value.is_a?(Integer) && (value <= 12 && value >= 0)
-        set_value(:month, value)
+        @bits = Bits.set_month(@bits, value)
       else
         raise PartialDateError, "Month must an be integer between 1 and 12"
       end
@@ -152,7 +152,7 @@ module PartialDate
 
     # Public: Get the month from a partial date.
     def month
-      get_value(:month)
+      Bits.get_month(@bits)
     end
 
 
@@ -175,8 +175,7 @@ module PartialDate
       if value.is_a?(Integer) && (value >= 0 && value <= 31)
         begin
           date = ::Date.civil(self.year, self.month, value) if value > 0
-          #@value  = (self.value - self.day + value)
-          set_value(:day, value)
+          @bits = Bits.set_day(@bits, value)
         rescue 
           raise PartialDateError, "Day must be a valid day for the given month"
         end
@@ -187,8 +186,7 @@ module PartialDate
 
     # Public: Get the day from a partial date.
     def day
-      #self.value > 0 ? self.value - (self.value / 100).abs * 100 : 0
-      get_value(:day)
+      Bits.get_day(@bits)
     end
 
     # Public: Returns a formatted string representation of the partial date.
@@ -216,38 +214,6 @@ module PartialDate
     # Returns -1, 1, or 0
     def <=>(other_date)
       self.value <=> other_date.value
-    end
-
-
-    private
-
-    # Internal: Retreive a value from the array backing store.
-    #
-    # Returns an integer value for partial date, year, month or day.
-    def get_value(element)
-      @data[element]
-    end
-
-    # Internal: Set a value in the array backing store - either the
-    # complete date value (from load or value accessors), or a year, 
-    # month, or day value after which the partial date will be recomputed.
-    #
-    # Returns nothing
-    def set_value(element, value)
-      case element
-      when :date
-        @data[:year] = (value / 10000).abs 
-        @data[:month] = ((value - (value / 10000).abs * 10000) / 100).abs
-        @data[:day] = value - (value / 100).abs * 100 
-      when :year
-        @data[:date] = @data[:date] - (self.year * 10000) + (value * 10000)
-      when :month
-        @data[:date] = @data[:date] - (self.month * 100) + (value * 100)
-      when :day
-        @data[:date] = @data[:date] - self.day + value
-      end 
-
-      @data[element] = value
     end
   end
 end
