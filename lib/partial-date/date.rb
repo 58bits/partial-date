@@ -209,11 +209,31 @@ module PartialDate
       end
     end
 
-    # Public: Spaceship operator for date comparisons.
+    # Public: Spaceship operator for date comparisons. Comparisons start
+    # with year, then month, then day - which are bitmask functions and 
+    # faster than 'self.value' which requires math to produce the integer.
     #
     # Returns -1, 1, or 0
     def <=>(other_date)
-      self.value <=> other_date.value
+      if self.year < other_date.year
+        -1
+      elsif self.year > other_date.year
+        1
+      else
+        if self.month < other_date.month
+          -1
+        elsif self.month > other_date.month
+          1
+        else
+          if self.day < other_date.day
+            -1
+          elsif self.day > other_date.day
+            1
+          else
+            0
+          end
+        end
+      end
     end
   end
 end

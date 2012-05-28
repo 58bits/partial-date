@@ -170,19 +170,55 @@ describe PartialDate::Date do
   end
 
   describe "Comparisons" do
-    it "should determine if one date is greater than another" do
+    it "should determine if one date is greater than another based on year" do
+        a = PartialDate::Date.new {|d| d.year = 2013; }
+        b = PartialDate::Date.new {|d| d.year = 2012; }
+        a.should be > b
+    end
+
+    it "should determine if one date is less than another based on year" do
+        a = PartialDate::Date.new {|d| d.year = 2011; }
+        b = PartialDate::Date.new {|d| d.year = 2012; }
+        a.should be < b
+    end
+
+    it "should determine if one date is equal to another based on year" do
+        a = PartialDate::Date.new {|d| d.year = 2012; }
+        b = PartialDate::Date.new {|d| d.year = 2012; }
+        a.should be == b
+    end
+
+    it "should determine if one date is greater than another based on month" do
+        a = PartialDate::Date.new {|d| d.year = 2012; d.month = 11; }
+        b = PartialDate::Date.new {|d| d.year = 2012; d.month = 10 }
+        a.should be > b
+    end
+
+    it "should determine if one date is less than another based on month" do
+        a = PartialDate::Date.new {|d| d.year = 2012; d.month = 9; }
+        b = PartialDate::Date.new {|d| d.year = 2012; d.month = 10 }
+        a.should be < b
+    end
+
+    it "should determine if one date is equal to another based on month" do
+        a = PartialDate::Date.new {|d| d.year = 2012; d.month = 10; }
+        b = PartialDate::Date.new {|d| d.year = 2012; d.month = 10 }
+        a.should be == b
+    end
+
+    it "should determine if one date is greater than another based on day" do
         a = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 31}
         b = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 30}
         a.should be > b
     end
 
-    it "should determine if one date is less than another" do
-        a = PartialDate::Date.new {|d| d.year = 2012; d.month = 0; d.day = 0}
+    it "should determine if one date is less than another based on day" do
+        a = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 29}
         b = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 30}
         a.should be < b
     end
 
-    it "should determine if one date is equal to another" do
+    it "should determine if one date is equal to another based on day" do
         a = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 30}
         b = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 30}
         a.should be == b
