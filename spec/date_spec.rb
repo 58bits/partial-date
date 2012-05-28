@@ -102,15 +102,15 @@ describe PartialDate::Date do
     end
 
     it "should raise an error if month is set to an invalid string" do
-      expect {date.month = "AB"}.to raise_error(PartialDate::PartialDateError, "Month must be a valid one or two digit string or integer between 1 and 12")
+      expect {date.month = "AB"}.to raise_error(PartialDate::PartialDateError, "Month must be a valid one or two digit string or integer between 0 and 12")
     end
 
     it "should raise an error if month is set to a value greater than 12" do
-      expect {date.month = 13}.to raise_error(PartialDate::PartialDateError, "Month must an be integer between 1 and 12")
+      expect {date.month = 13}.to raise_error(PartialDate::PartialDateError, "Month must an be integer between 0 and 12")
     end
 
     it "should raise an error if month is set to a value less than zero" do
-      expect {date.month = -1}.to raise_error(PartialDate::PartialDateError, "Month must an be integer between 1 and 12")
+      expect {date.month = -1}.to raise_error(PartialDate::PartialDateError, "Month must an be integer between 0 and 12")
     end
 
     it "should allow the month to be set to zero" do
@@ -134,19 +134,19 @@ describe PartialDate::Date do
 
     it "should raise an error if a day is set before a year and month" do
       no_month = PartialDate::Date.new
-      expect {no_month.day = 10}.to raise_error(PartialDate::PartialDateError, "A year and month must be set before a day")
+      expect {no_month.day = 10}.to raise_error(PartialDate::PartialDateError, "A month must be set before a day")
     end
 
     it "should raise an error if day is set to an invalid string" do
-      expect {date.day = "AB"}.to raise_error(PartialDate::PartialDateError, "Day must be a valid one or two digit string or integer between 1 and 31")
+      expect {date.day = "AB"}.to raise_error(PartialDate::PartialDateError, "Day must be a valid one or two digit string or integer between 0 and 31")
     end
 
     it "should raise an error if day is set to a value less than zero" do
-      expect {date.day = -1}.to raise_error(PartialDate::PartialDateError, "Day must be an integer between 1 and 31")
+      expect {date.day = -1}.to raise_error(PartialDate::PartialDateError, "Day must be an integer between 0 and 31")
     end
 
     it "should raise an error if day is set to a value greater than 31" do
-      expect {date.day = 32}.to raise_error(PartialDate::PartialDateError, "Day must be an integer between 1 and 31")
+      expect {date.day = 32}.to raise_error(PartialDate::PartialDateError, "Day must be an integer between 0 and 31")
     end
 
     it "should raise an error if the day is an invalid day for the given month" do

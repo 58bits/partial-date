@@ -161,7 +161,7 @@ module PartialDate
     # nil and empty strings are allowed.
     def day=(value)
 
-      raise PartialDateError, "A year and month must be set before a day" if year == 0 && month == 0
+      raise PartialDateError, "A month must be set before a day" if month == 0
 
       value = 0 if value.nil?
 
