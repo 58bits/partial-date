@@ -139,7 +139,7 @@ module PartialDate
         if value =~ /\A\d{1,2}\z/ 
           value = value.to_i
         else
-          raise PartialDateError, "Month must be a valid one or two digit string or integer between 1 and 12"
+          raise PartialDateError, "Month must be a valid one or two digit string or integer between 0 and 12"
         end
       end
 
@@ -147,7 +147,7 @@ module PartialDate
         @bits = Bits.set_month(@bits, value)
         @bits = Bits.set_day(@bits, 0) if value == 0
       else
-        raise PartialDateError, "Month must an be integer between 1 and 12"
+        raise PartialDateError, "Month must an be integer between 0 and 12"
       end
     end
 
@@ -169,7 +169,7 @@ module PartialDate
         if value =~ /\A\d{1,2}\z/
           value = value.to_i
         else
-          raise PartialDateError, "Day must be a valid one or two digit string or integer between 1 and 31"
+          raise PartialDateError, "Day must be a valid one or two digit string or integer between 0 and 31"
         end
       end
 
@@ -181,7 +181,7 @@ module PartialDate
           raise PartialDateError, "Day must be a valid day for the given month"
         end
       else
-        raise PartialDateError, "Day must be an integer between 1 and 31"
+        raise PartialDateError, "Day must be an integer between 0 and 31"
       end
     end
 
