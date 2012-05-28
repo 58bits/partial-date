@@ -3,7 +3,7 @@ module PartialDate
   class Bits
 
     # Key:
-    #   The firt 5 bits are the day (max 31)
+    #   The first 5 bits are the day (max 31)
     #   The next 4 bits are the month (max 12)
     #   The topmost/leftmost 14 bits are the year (max 9999)
 
