@@ -145,6 +145,7 @@ module PartialDate
 
       if value.is_a?(Integer) && (value <= 12 && value >= 0)
         @bits = Bits.set_month(@bits, value)
+        @bits = Bits.set_day(@bits, 0) if value == 0
       else
         raise PartialDateError, "Month must an be integer between 1 and 12"
       end
