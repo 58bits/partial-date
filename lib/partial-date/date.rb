@@ -200,9 +200,9 @@ module PartialDate
     # Returns string representation of date.
     def to_s
       if self.year > 0
-        result = self.year.to_s 
-        result = result + "-" + self.month.to_s if self.month > 0
-        result = result + "-" + self.day.to_s if self.day > 0
+        result = self.year.to_s.rjust(4, '0') 
+        result = result + "-" + self.month.to_s.rjust(2, '0') if self.month > 0
+        result = result + "-" + self.day.to_s.rjust(2, '0') if self.day > 0
         return result
       else
         return ""

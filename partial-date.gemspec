@@ -5,8 +5,8 @@ require File.expand_path('../lib/partial-date/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.name          = "partial-date"
   gem.version       = PartialDate::VERSION
-  gem.summary       = "A simple date class that can be used to store partial date values in a single column/attribute." 
-  gem.description   = "A simple date class that can be used to store partial date values in a single column/attribute. An example use case would include an archive, or catalogue entry where the complete date is unknown."
+  gem.summary       = %q{A simple date class that can be used to store partial date values in a single column/attribute.} 
+  gem.description   = %q{A simple date class that can be used to store partial date values in a single column/attribute. An example use case would include an archive, or catalogue entry where the complete date is unknown.}
   gem.license       = "MIT"
   gem.authors       = ["Anthony Bouch"]
   gem.email         = ["tony@58bits.com"]
