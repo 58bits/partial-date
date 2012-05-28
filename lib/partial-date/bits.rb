@@ -13,7 +13,7 @@ module PartialDate
 
     ZERO_YEAR_MASK = 0b00000000000000111111111
     ZERO_MONTH_MASK = 0b11111111111111000011111
-    ZERO_DAY_MASK = 0b111111111111111111000000
+    ZERO_DAY_MASK = 0b11111111111111111000000
 
     def self.get_date(register)
         (get_year(register) * 10000) + (get_month(register) * 100) + get_day(register)
