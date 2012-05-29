@@ -232,6 +232,7 @@ module PartialDate
         return result
       else
         return ""
+      end
     end
 
     # Public: Spaceship operator for date comparisons. Comparisons are
