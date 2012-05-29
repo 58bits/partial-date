@@ -92,7 +92,7 @@ describe PartialDate::Date do
     end
 
     it "should raise an error if year is set to a value greater than 1048576" do
-      expect {date.year = 1048577 }.to raise_error(PartialDate::YearError, "Year must be an integer integer from -1048576 to 1048576")
+      expect {date.year = 1048577 }.to raise_error(PartialDate::YearError, "Year must be an integer from -1048576 to 1048576")
     end
 
     it "should return a postive year when a positive year is set" do
@@ -103,6 +103,11 @@ describe PartialDate::Date do
     it "should return a negative year when a negative year is set" do
       date.year = -9999
       date.year.should == -9999
+    end
+
+    it "should allow a negative value in a string" do
+      date.year = "-2010"
+      date.year.should == -2010
     end
   end
 

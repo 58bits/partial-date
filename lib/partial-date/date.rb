@@ -139,7 +139,7 @@ module PartialDate
       end
 
       if value.is_a?(String) 
-        if value =~ /\A\d{1,7}\z/
+        if value =~ /\A\-?\d{1,7}\z/
           value = value.to_i
         else
           raise YearError, "Year must be a valid string or integer from -1048576 to 1048576"
@@ -149,7 +149,7 @@ module PartialDate
       if value.is_a?(Integer) && (value >= -1048576 && value <= 1048576) 
         @bits = self.class.set_year(@bits, value)
       else
-        raise YearError, "Year must be an integer integer from -1048576 to 1048576"
+        raise YearError, "Year must be an integer from -1048576 to 1048576"
       end
     end
 
