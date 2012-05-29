@@ -1,6 +1,7 @@
 h3. 1.1.6 / 2012-05-30
 
-* Bugfix: Implemented to_s for optional year and negative year value.
+* Bugfix: Checked that sign is switched off when a postive year is set after a negative year.
+* Bugfix: Fixed to_s again (before formatters are implemented).
 
 h3. 1.1.5 / 2012-05-30
 
