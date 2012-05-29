@@ -133,9 +133,7 @@ module PartialDate
     #
     # Returns nothing  
     def year=(value)
-      if value.nil?
-        raise YearError, "Year cannot be nil"
-      end
+      value = 0 if value.nil?
 
       if value.is_a?(String) 
         if value =~ /\A\-?\d{1,7}\z/
