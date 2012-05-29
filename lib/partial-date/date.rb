@@ -280,6 +280,7 @@ module PartialDate
 
     def self.set_year(register, value)
       register = set_sign(register, 1) if value < 0
+      register = set_sign(register, 0) if value >= 0
       register = (register & ZERO_YEAR_MASK) | (value.abs << YEAR_SHIFT)
     end
 
