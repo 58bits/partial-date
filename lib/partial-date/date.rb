@@ -5,20 +5,20 @@ module PartialDate
   # Key:
   #   The first 5 bits are the day (max 31)
   #   The next 4 bits are the month (max 12)
-  #   The next 14 bits are the year (max 9999)
+  #   The next 20 bits are the year (max 1048576)
   #   The most significant bit (MSB) is a 1 bit sign bit (for negative years).
 
-  DAY_MASK    = 0b000000000000000000011111
-  MONTH_MASK  = 0b000000000000000111100000
-  YEAR_MASK   = 0b011111111111111000000000
-  SIGN_MASK   = 0b100000000000000000000000
+  DAY_MASK    = 0b000000000000000000000000011111
+  MONTH_MASK  = 0b000000000000000000000111100000
+  YEAR_MASK   = 0b011111111111111111111000000000
+  SIGN_MASK   = 0b100000000000000000000000000000
 
-  ZERO_SIGN_MASK  = 0b011111111111111111111111
-  ZERO_YEAR_MASK  = 0b100000000000000111111111
-  ZERO_MONTH_MASK = 0b111111111111111000011111
-  ZERO_DAY_MASK   = 0b111111111111111111000000
+  ZERO_SIGN_MASK  = 0b011111111111111111111111111111
+  ZERO_YEAR_MASK  = 0b100000000000000000000111111111
+  ZERO_MONTH_MASK = 0b111111111111111111111000011111
+  ZERO_DAY_MASK   = 0b111111111111111111111111000000
 
-  SIGN_SHIFT = 23
+  SIGN_SHIFT = 29
   YEAR_SHIFT = 9
   MONTH_SHIFT = 5
 
@@ -114,10 +114,10 @@ module PartialDate
     #
     # Returns nothing  
     def value=(value)
-      if value.is_a?(Integer) && (value >= 10000 && value <= 99991231)
+      if value.is_a?(Integer) && (value >= -10485761231 && value <= 10485761231)
         @bits = self.class.set_date(@bits, value)
       else
-        raise PartialDateError, "Date value must be an integer betwen 10000 and 99991231"
+        raise PartialDateError, "Date value must be an integer betwen -10485761231 and 10485761231"
       end
     end
 
@@ -139,17 +139,17 @@ module PartialDate
       end
 
       if value.is_a?(String) 
-        if value =~ /\A\d{4}\z/
+        if value =~ /\A\d{1,7}\z/
           value = value.to_i
         else
-          raise PartialDateError, "Year must be a valid four digit string or integer between 1 and 9999"
+          raise PartialDateError, "Year must be a valid string or integer from -1048576 to 1048576"
         end
       end
 
-      if value.is_a?(Integer) && (value <= 9999) 
+      if value.is_a?(Integer) && (value >= -1048576 && value <= 1048576) 
         @bits = self.class.set_year(@bits, value)
       else
-        raise PartialDateError, "Year must be an integer less than 9999"
+        raise PartialDateError, "Year must be an integer integer from -1048576 to 1048576"
       end
     end
 
@@ -160,8 +160,6 @@ module PartialDate
 
     # Public: Set the month of a partial date.
     def month=(value)
-
-      raise PartialDateError, "A year must be set before a month" if year == 0
 
       value = 0 if value.nil?
 

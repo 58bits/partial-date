@@ -44,7 +44,7 @@ describe PartialDate::Date do
   end
 
   it "should not allow an invalid date value to be set in a date instance" do
-    expect {new_date = PartialDate::Date.new {|d| d.value = 100000000}}.to raise_error(PartialDate::PartialDateError, "Date value must be an integer betwen 10000 and 99991231")
+    expect {new_date = PartialDate::Date.new {|d| d.value = 10485761232 }}.to raise_error(PartialDate::PartialDateError, "Date value must be an integer betwen -10485761231 and 10485761231")
   end
 
   it "should return a string representation of date in the correct format" do
@@ -88,15 +88,11 @@ describe PartialDate::Date do
     end
 
     it "should raise an error if year is set to an invalid string" do
-      expect {date.year = "ABCD" }.to raise_error(PartialDate::PartialDateError, "Year must be a valid four digit string or integer between 1 and 9999")
+      expect {date.year = "ABCD" }.to raise_error(PartialDate::PartialDateError, "Year must be a valid string or integer from -1048576 to 1048576")
     end
 
-    it "should raise an error if year is set to a five digit string" do
-      expect {date.year = "10000" }.to raise_error(PartialDate::PartialDateError, "Year must be a valid four digit string or integer between 1 and 9999")
-    end
-
-    it "should raise an error if year is set to a value greater than 9999" do
-      expect {date.year = 10000 }.to raise_error(PartialDate::PartialDateError, "Year must be an integer less than 9999")
+    it "should raise an error if year is set to a value greater than 1048576" do
+      expect {date.year = 1048577 }.to raise_error(PartialDate::PartialDateError, "Year must be an integer integer from -1048576 to 1048576")
     end
 
     it "should return a postive year when a positive year is set" do
@@ -112,11 +108,6 @@ describe PartialDate::Date do
 
   describe "Month" do
     before(:each) { date.year = 2000 }
-
-    it "should raise an error if a month is set before a year" do
-      no_year = PartialDate::Date.new
-      expect {no_year.month = 10}.to raise_error(PartialDate::PartialDateError, "A year must be set before a month")
-    end
 
     it "should raise an error if month is set to an invalid string" do
       expect {date.month = "AB"}.to raise_error(PartialDate::PartialDateError, "Month must be a valid one or two digit string or integer between 0 and 12")
