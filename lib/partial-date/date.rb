@@ -225,15 +225,15 @@ module PartialDate
     #
     # Returns string representation of date.
     def to_s
+      result = ""
       if value != 0
-        result = ""
         result = year.to_s.rjust(4, '0') if year != 0
-        result = result + "-" + month.to_s.rjust(2, '0') if month > 0
+        result = result + "-" if result.length > 3
+        result = result + month.to_s.rjust(2, '0') if month > 0
         result = result + "-" + day.to_s.rjust(2, '0') if day > 0
         return result
-      else
-        return ""
       end
+      result
     end
 
     # Public: Spaceship operator for date comparisons. Comparisons are
