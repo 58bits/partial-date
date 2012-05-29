@@ -84,15 +84,15 @@ describe PartialDate::Date do
 
   describe "Year" do
     it "should raise an error if year is set to nil" do
-      expect {date.year = nil}.to raise_error(PartialDate::PartialDateError)
+      expect {date.year = nil}.to raise_error(PartialDate::YearError)
     end
 
     it "should raise an error if year is set to an invalid string" do
-      expect {date.year = "ABCD" }.to raise_error(PartialDate::PartialDateError, "Year must be a valid string or integer from -1048576 to 1048576")
+      expect {date.year = "ABCD" }.to raise_error(PartialDate::YearError, "Year must be a valid string or integer from -1048576 to 1048576")
     end
 
     it "should raise an error if year is set to a value greater than 1048576" do
-      expect {date.year = 1048577 }.to raise_error(PartialDate::PartialDateError, "Year must be an integer integer from -1048576 to 1048576")
+      expect {date.year = 1048577 }.to raise_error(PartialDate::YearError, "Year must be an integer integer from -1048576 to 1048576")
     end
 
     it "should return a postive year when a positive year is set" do
@@ -110,15 +110,15 @@ describe PartialDate::Date do
     before(:each) { date.year = 2000 }
 
     it "should raise an error if month is set to an invalid string" do
-      expect {date.month = "AB"}.to raise_error(PartialDate::PartialDateError, "Month must be a valid one or two digit string or integer between 0 and 12")
+      expect {date.month = "AB"}.to raise_error(PartialDate::MonthError, "Month must be a valid one or two digit string or integer between 0 and 12")
     end
 
     it "should raise an error if month is set to a value greater than 12" do
-      expect {date.month = 13}.to raise_error(PartialDate::PartialDateError, "Month must an be integer between 0 and 12")
+      expect {date.month = 13}.to raise_error(PartialDate::MonthError, "Month must an be integer between 0 and 12")
     end
 
     it "should raise an error if month is set to a value less than zero" do
-      expect {date.month = -1}.to raise_error(PartialDate::PartialDateError, "Month must an be integer between 0 and 12")
+      expect {date.month = -1}.to raise_error(PartialDate::MonthError, "Month must an be integer between 0 and 12")
     end
 
     it "should allow the month to be set to zero" do
@@ -142,23 +142,23 @@ describe PartialDate::Date do
 
     it "should raise an error if a day is set before a year and month" do
       no_month = PartialDate::Date.new
-      expect {no_month.day = 10}.to raise_error(PartialDate::PartialDateError, "A month must be set before a day")
+      expect {no_month.day = 10}.to raise_error(PartialDate::DayError, "A month must be set before a day")
     end
 
     it "should raise an error if day is set to an invalid string" do
-      expect {date.day = "AB"}.to raise_error(PartialDate::PartialDateError, "Day must be a valid one or two digit string or integer between 0 and 31")
+      expect {date.day = "AB"}.to raise_error(PartialDate::DayError, "Day must be a valid one or two digit string or integer between 0 and 31")
     end
 
     it "should raise an error if day is set to a value less than zero" do
-      expect {date.day = -1}.to raise_error(PartialDate::PartialDateError, "Day must be an integer between 0 and 31")
+      expect {date.day = -1}.to raise_error(PartialDate::DayError, "Day must be an integer between 0 and 31")
     end
 
     it "should raise an error if day is set to a value greater than 31" do
-      expect {date.day = 32}.to raise_error(PartialDate::PartialDateError, "Day must be an integer between 0 and 31")
+      expect {date.day = 32}.to raise_error(PartialDate::DayError, "Day must be an integer between 0 and 31")
     end
 
     it "should raise an error if the day is an invalid day for the given month" do
-      expect {date.day = 31}.to raise_error(PartialDate::PartialDateError, "Day must be a valid day for the given month")
+      expect {date.day = 31}.to raise_error(PartialDate::DayError, "Day must be a valid day for the given month")
     end
 
     it "should return zero when set to nil" do
