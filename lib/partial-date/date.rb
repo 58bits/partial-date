@@ -133,7 +133,6 @@ module PartialDate
     #
     # Returns nothing  
     def year=(value)
-
       if value.nil?
         raise YearError, "Year cannot be nil"
       end
@@ -160,7 +159,6 @@ module PartialDate
 
     # Public: Set the month of a partial date.
     def month=(value)
-
       value = 0 if value.nil?
 
       if value.is_a?(String) 
@@ -188,7 +186,6 @@ module PartialDate
     # Public: Set the day portion of a partial date. Day is optional so zero, 
     # nil and empty strings are allowed.
     def day=(value)
-
       raise DayError, "A month must be set before a day" if month == 0
 
       value = 0 if value.nil?
