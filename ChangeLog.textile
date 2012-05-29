@@ -1,3 +1,13 @@
+h3. 1.1.5 / 2012-05-30
+
+* Allow negative years and year range from -1048576 to 1048576 (20 bits).
+* Implemented negative year with signing mask. 
+* Year is no longer mandatory
+* Created more specific error classes
+* Implemented readonly attribute Date#bits to allow public access to the bit store for comparison in <=>.
+* Moved bits.rb back into date.rb
+
+
 h3. 1.1.4 / 2012-05-29
 
 * Changed error messages for month and day to 0 - 12 and 0 - 31 respectively (since zero values are allowed).
