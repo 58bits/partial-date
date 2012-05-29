@@ -105,6 +105,11 @@ describe PartialDate::Date do
       date.year.should == -9999
     end
 
+    it "should allow a valid string value" do
+      date.year = "2010"
+      date.year.should == 2010
+    end
+
     it "should allow a negative value in a string" do
       date.year = "-2010"
       date.year.should == -2010
