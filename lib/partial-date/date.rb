@@ -135,21 +135,21 @@ module PartialDate
     def year=(value)
 
       if value.nil?
-        raise PartialDateError, "Year cannot be nil"
+        raise YearError, "Year cannot be nil"
       end
 
       if value.is_a?(String) 
         if value =~ /\A\d{1,7}\z/
           value = value.to_i
         else
-          raise PartialDateError, "Year must be a valid string or integer from -1048576 to 1048576"
+          raise YearError, "Year must be a valid string or integer from -1048576 to 1048576"
         end
       end
 
       if value.is_a?(Integer) && (value >= -1048576 && value <= 1048576) 
         @bits = self.class.set_year(@bits, value)
       else
-        raise PartialDateError, "Year must be an integer integer from -1048576 to 1048576"
+        raise YearError, "Year must be an integer integer from -1048576 to 1048576"
       end
     end
 
@@ -167,7 +167,7 @@ module PartialDate
         if value =~ /\A\d{1,2}\z/ 
           value = value.to_i
         else
-          raise PartialDateError, "Month must be a valid one or two digit string or integer between 0 and 12"
+          raise MonthError, "Month must be a valid one or two digit string or integer between 0 and 12"
         end
       end
 
@@ -175,7 +175,7 @@ module PartialDate
         @bits = self.class.set_month(@bits, value)
         @bits = self.class.set_day(@bits, 0) if value == 0
       else
-        raise PartialDateError, "Month must an be integer between 0 and 12"
+        raise MonthError, "Month must an be integer between 0 and 12"
       end
     end
 
@@ -197,7 +197,7 @@ module PartialDate
         if value =~ /\A\d{1,2}\z/
           value = value.to_i
         else
-          raise PartialDateError, "Day must be a valid one or two digit string or integer between 0 and 31"
+          raise DayError, "Day must be a valid one or two digit string or integer between 0 and 31"
         end
       end
 
@@ -206,10 +206,10 @@ module PartialDate
           date = ::Date.civil(self.year, self.month, value) if value > 0
           @bits = self.class.set_day(@bits, value)
         rescue 
-          raise PartialDateError, "Day must be a valid day for the given month"
+          raise DayError, "Day must be a valid day for the given month"
         end
       else
-        raise PartialDateError, "Day must be an integer between 0 and 31"
+        raise DayError, "Day must be an integer between 0 and 31"
       end
     end
 
