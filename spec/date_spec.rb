@@ -62,6 +62,26 @@ describe PartialDate::Date do
     new_date.to_s.should match(/\A\d{4}\z/)
   end
 
+  describe "Sign" do
+    it "should be set to 1" do
+      register = 0
+      register = PartialDate::Date.set_sign(register, 1)
+      PartialDate::Date.get_sign(register).should == 1
+    end
+    it "should be 1 if year is a negative value" do
+      register = 0
+      register = PartialDate::Date.set_year(register, -9999)
+      PartialDate::Date.get_sign(register).should == 1
+    end
+
+    it "should be 0 if year is a positive value" do
+      register = 0
+      register = PartialDate::Date.set_year(register, 9999)
+      PartialDate::Date.get_sign(register).should == 0
+    end
+  end
+
+
   describe "Year" do
     it "should raise an error if year is set to nil" do
       expect {date.year = nil}.to raise_error(PartialDate::PartialDateError)
@@ -76,20 +96,17 @@ describe PartialDate::Date do
     end
 
     it "should raise an error if year is set to a value greater than 9999" do
-      expect {date.year = 10000 }.to raise_error(PartialDate::PartialDateError, "Year must be an integer between 1 and 9999")
+      expect {date.year = 10000 }.to raise_error(PartialDate::PartialDateError, "Year must be an integer less than 9999")
     end
 
-    it "should raise an error if year is set to zero" do
-      expect {date.year = 0 }.to raise_error(PartialDate::PartialDateError, "Year must be an integer between 1 and 9999")
-    end
-
-    it "should raise an error if year is set to a value less than zero" do
-      expect {date.year = -1 }.to raise_error(PartialDate::PartialDateError, "Year must be an integer between 1 and 9999")
-    end
-
-    it "should return a year when a year is set" do
+    it "should return a postive year when a positive year is set" do
       date.year = 2050
       date.year.should == 2050
+    end
+
+    it "should return a negative year when a negative year is set" do
+      date.year = -9999
+      date.year.should == -9999
     end
   end
 
