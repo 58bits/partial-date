@@ -83,10 +83,6 @@ describe PartialDate::Date do
 
 
   describe "Year" do
-    it "should raise an error if year is set to nil" do
-      expect {date.year = nil}.to raise_error(PartialDate::YearError)
-    end
-
     it "should raise an error if year is set to an invalid string" do
       expect {date.year = "ABCD" }.to raise_error(PartialDate::YearError, "Year must be a valid string or integer from -1048576 to 1048576")
     end

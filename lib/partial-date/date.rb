@@ -226,7 +226,7 @@ module PartialDate
       result = ""
       if value != 0
         result = year.to_s.rjust(4, '0') if year != 0
-        result = result + "-" if result.length > 3
+        result = result + "-" if result.length > 3 && month > 0
         result = result + month.to_s.rjust(2, '0') if month > 0
         result = result + "-" + day.to_s.rjust(2, '0') if day > 0
         return result
