@@ -1,8 +1,11 @@
 h1. partial-date
 
+* See the "ChangeLog":https://github.com/58bits/partial-date/blob/master/ChangeLog.textile for details of this release.
+
 * "Homepage":https://github.com/58bits/partial-date#readme
 * "Issues":https://github.com/58bits/partial-date/issues
 * "Documentation":http://rubydoc.info/gems/partial-date/frames
+
 
 h2. Description
 
