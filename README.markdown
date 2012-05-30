@@ -15,7 +15,7 @@ A simple date class that can be used to store partial date values in a single co
 
 PartialDate::Date uses a 30 bit register as the backing store for date instances, and bit fiddling to get or set year, month and day values. As such it will perform well in a loop or collection of date objects.
 
-Use `date.value` to get or set an Integer value that can be used to rehydrate a date object, or save the date value to a persistance store in a readable Integer form e.g. 20121201 for 2012 December 01. 
+Use `date.value` to get or set an Integer value that can be used to rehydrate a date object, or save the date value to a persistence store in a readable Integer form e.g. 20121201 for 2012 December 01. 
 
 PartialDate::Date#to\_s has the following built-in formats:
 
@@ -25,7 +25,7 @@ PartialDate::Date#to\_s has the following built-in formats:
     d.to_s :long     :long => "%d %B %Y"     
     d_to_s :number   :number => "%Y%m%d"     
 
-Custom formatters can be specificed using the following:
+Custom formatters can be specified using the following:
 
     %Y - Year with century (can be negative, 4 digits at least)
                 -0001, 0000, 1995, 2009, 14292, etc.
@@ -74,12 +74,12 @@ Custom formatters can be specificed using the following:
 
 ## Install
 
-`$ gem install partial-date`
+    $ gem install partial-date
 
 ## TODO
 
  * PartialDate::Date#parse method for construction from strings.
- *  I18n support.
+ * I18n support.
 
 ## Copyright
 
