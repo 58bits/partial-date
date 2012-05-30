@@ -275,13 +275,35 @@ module PartialDate
       result = result.gsub(/\A[\/,-]+/, '').gsub(/\s\s/, ' ').gsub(/[\/\-,]([\/\-,])/, '\1').gsub(/[\/,-]+\z/, '')
     end
 
-    # Public: Spaceship operator for date comparisons. Comparisons are
-    # made using the bit containing backing store. However the sign bit 
-    # is in MSB - so we need to left shift both values by 1 first.
+    # Public: Spaceship operator for date comparisons. Comparisons 
+    # are made by cascading down from year, to month to day. This
+    # should be faster than passing to self.value <=> other_date.value
+    # since the integer value attribute requires multiplication to
+    # calculate.
     #
     # Returns -1, 1, or 0
     def <=>(other_date)
-      (@bits << 1) <=> (other_date.bits << 1)
+      if self.year < other_date.year
+        return -1
+      elsif self.year > other_date.year
+        return 1
+      else
+        if self.month < other_date.month
+          return -1
+        elsif
+          self.month > other_date.month
+          return 1
+        else
+          if self.day < other_date.day
+            return -1
+          elsif
+            self.day > other_date.day
+            return 1
+          else
+            return 0
+          end
+        end
+      end
     end
 
 
