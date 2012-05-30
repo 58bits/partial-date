@@ -1,3 +1,8 @@
+### 1.1.9 / 2012-05-31
+
+* BugFix: to_s will preserve minus sign for negative year when formatter starts with %Y
+* BugFix: <=> correct for negative dates.
+
 ### 1.1.8 / 2012-05-30
 
 * Implemented to_s formatters.
