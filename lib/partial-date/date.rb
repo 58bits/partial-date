@@ -266,10 +266,12 @@ module PartialDate
         result.gsub!( key, value.call( self )) if result.include? key
       end
 
-      # result.strip!
-      # result = result.gsub(/(\\A[\\/\\-,]+) | /, '') #any leading slashes, hyphens, or commas.
-      # result.gsub!(/[\\/\\-,]+\\z/, '') #any trailing slashes, hyphens, or commas.
-      result
+      result.strip!
+      # Remove any leading "/-," chars.
+      # Remove duplicate white spaces
+      # Remove any duplicate "/-," chars
+      # Remove any trailing "/-," chars.
+      result = result.gsub(/\A[\/,-]+/, '').gsub(/\s\s/, ' ').gsub(/[\/\-,]([\/\-,])/, '\1').gsub(/[\/,-]+\z/, '')
     end
 
     # Public: Spaceship operator for date comparisons. Comparisons are
