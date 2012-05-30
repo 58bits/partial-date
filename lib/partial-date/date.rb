@@ -42,7 +42,7 @@ module PartialDate
                       "%Y" => lambda { |d| (d.year != 0) ? d.year.to_s.rjust(4, '0') : ""  },
                       "%m" => lambda { |d| (d.month != 0)? d.month.to_s.rjust(2, '0') : "" },
                       "%b" => lambda { |d| (d.month != 0) ? ABBR_MONTH_NAMES[d.month - 1] : "" },
-                      "%B" => lambda { |d| (d.month != 0) ? MONTH_NAME[d.month - 1] : "" },
+                      "%B" => lambda { |d| (d.month != 0) ? MONTH_NAMES[d.month - 1] : "" },
                       "%d" => lambda { |d| (d.day != 0) ? d.day.to_s.rjust(2, '0') : "" },
                       "%e" => lambda { |d| (d.day != 0) ? d.day.to_s : "" }
                     }
