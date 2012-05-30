@@ -273,7 +273,7 @@ module PartialDate
       # Anything else - you're on your own ;-)
       lead_trim = (year != 0 && format.start_with?("%Y")) ? /\A[\/\,\s]+/ : /\A[\/\,\-\s]+/ 
 
-      result = result.gsub(lead_trim, '').gsub(/\s\s/, ' ').gsub(/[\/\-\,]([\/\-\,])/, '\1').gsub(/[\/\,\-]+\z/, '')
+      result = result.gsub(lead_trim, '').gsub(/\s\s/, ' ').gsub(/[\/\-\,]([\/\-\,])/, '\1').gsub(/[\/\,\-\s]+\z/, '')
     end
 
     # Public: Spaceship operator for date comparisons. Comparisons 
