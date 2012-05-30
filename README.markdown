@@ -78,7 +78,7 @@ Custom formatters can be specificed using the following:
 
 ## TODO
 
- * `PartialDate::Date.parse` method for construction from strings.
+ * PartialDate::Date#parse method for construction from strings.
  *  I18n support.
 
 ## Copyright
