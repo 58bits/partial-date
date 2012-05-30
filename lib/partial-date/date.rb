@@ -271,9 +271,8 @@ module PartialDate
       # Remove any duplicate "/-," chars and replace with the single char.
       # Remove any trailing "/-," chars.
       # Anything else - you're on your own ;-)
-      result.strip!
-      lead_trim = (year != 0 && format.start_with?("%Y")) ? /\A[\/\,]+/ : /\A[\/\,\-]+/ 
-      result = result.gsub(lead_trim, '').gsub(/\s\s/, ' ').gsub(/[\/\-\,]([\/\-\,])/, '\1').gsub(/[\/\,\-]+\z/, '')
+      lead_trim = (year != 0 && format.lstrip.start_with?("%Y")) ? /\A[\/\,\s]+/ : /\A[\/\,\-\s]+/ 
+      result = result.gsub(lead_trim, '').gsub(/\s\s/, ' ').gsub(/[\/\-\,]([\/\-\,])/, '\1').gsub(/[\/\,\-\s]+\z/, '')
     end
 
     # Public: Spaceship operator for date comparisons. Comparisons 
