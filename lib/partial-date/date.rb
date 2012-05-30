@@ -167,7 +167,7 @@ module PartialDate
         end
       end
 
-      if value.is_a?(Integer) && (value <= 12 && value >= 0)
+      if value.is_a?(Integer) && (value >= 0 && value <= 12)
         @bits = self.class.set_month(@bits, value)
         @bits = self.class.set_day(@bits, 0) if value == 0
       else
@@ -254,7 +254,7 @@ module PartialDate
     end
 
     def self.set_date(register, value)
-        register = set_sign(register, 1) if value < 0
+        register = (value < 0) ? set_sign(register, 1) : set_sign(register, 0)
         register = set_year(register, (value.abs / 10000).abs)
         register = set_month(register, ((value - (value / 10000).abs * 10000) / 100).abs)
         register = set_day(register, value - (value / 100).abs * 100)
@@ -278,8 +278,7 @@ module PartialDate
     end
 
     def self.set_year(register, value)
-      register = set_sign(register, 1) if value < 0
-      register = set_sign(register, 0) if value >= 0
+      register = (value < 0) ? set_sign(register, 1) : set_sign(register, 0)
       register = (register & ZERO_YEAR_MASK) | (value.abs << YEAR_SHIFT)
     end
 
@@ -298,6 +297,5 @@ module PartialDate
     def self.set_day(register, value)
       register = (register & ZERO_DAY_MASK) | value
     end
-
   end
 end
