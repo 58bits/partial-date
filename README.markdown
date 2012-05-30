@@ -30,8 +30,8 @@ Custom formatters can be specificed using the following:
     %Y - Year with century (can be negative, 4 digits at least)
                 -0001, 0000, 1995, 2009, 14292, etc.
     %m - Month of the year, zero-padded (01..12)
-    %B - The full month name (``January'')
-    %b - The abbreviated month name (``Jan'')
+    %B - The full month name ('January')
+    %b - The abbreviated month name ('Jan')
     %d - Day of the month, zero-padded (01..31)
     %e - Day of the month, blank-padded ( 1..31)
 
