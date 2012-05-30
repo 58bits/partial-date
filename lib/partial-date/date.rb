@@ -22,6 +22,34 @@ module PartialDate
   YEAR_SHIFT = 9
   MONTH_SHIFT = 5
 
+  # TODO: Implement i18n support detecting whether a load path has been set or not
+  # and if not - setting it here to a default set of translations that match
+  # the generally available tranlsations for localizing dates.
+  #
+  # https://github.com/svenfuchs/i18n/blob/master/lib/i18n/backend/base.rb
+  # format = format.to_s.gsub(/%[aAbBp]/) do |match|
+  #   case match
+  #   when '%a' then I18n.t(:"date.abbr_day_names",                  :locale => locale, :format => format)[object.wday]
+  #   when '%A' then I18n.t(:"date.day_names",                       :locale => locale, :format => format)[object.wday]
+  #   when '%b' then I18n.t(:"date.abbr_month_names",                :locale => locale, :format => format)[object.mon]
+  #   when '%B' then I18n.t(:"date.month_names",                     :locale => locale, :format => format)[object.mon]
+  #   when '%p' then I18n.t(:"time.#{object.hour < 12 ? :am : :pm}", :locale => locale, :format => format) if object.respond_to? :hour
+  #   end
+  # end
+
+  FORMATS = { :default => "%Y-%m-%d", :short => "%d %m %Y", :medium => "%d %b %Y", :long => "%d %B %Y", :number => "%Y%m%d",  }
+  FORMAT_METHODS = { 
+                      "%Y" => lambda { |d| (d.year != 0) ? d.year.to_s.rjust(4, '0') : ""  },
+                      "%m" => lambda { |d| (d.month != 0)? d.month.to_s.rjust(2, '0') : "" },
+                      "%b" => lambda { |d| (d.month != 0) ? ABBR_MONTH_NAMES[d.month - 1] : "" },
+                      "%B" => lambda { |d| (d.month != 0) ? MONTH_NAME[d.month - 1] : "" },
+                      "%d" => lambda { |d| (d.day != 0) ? d.day.to_s.rjust(2, '0') : "" },
+                      "%e" => lambda { |d| (d.day != 0) ? d.day.to_s : "" }
+                    }
+
+                          
+  MONTH_NAMES = %w[January, February, March, April, May, June, July, August, September, October, November, December]
+  ABBR_MONTH_NAMES = %w[Jan, Feb, Mar, Apr, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
   
   # Public: A class for handling partial date storage. Partial dates are stored
   # as an 8 digit integer with optional month and day values.
@@ -213,8 +241,16 @@ module PartialDate
       self.class.get_day(@bits)
     end
 
-    # Public: Returns a formatted string representation of the partial date.
-    #
+    # Public: Returns a formatted string representation of the partial date. 
+    # A subset of date formatters have been implementes incuding:
+    # %Y - Year with century (can be negative, 4 digits at least)
+    #             -0001, 0000, 1995, 2009, 14292, etc.
+    # %m - Month of the year, zero-padded (01..12)
+    # %B - The full month name (``January'')
+    # %b - The abbreviated month name (``Jan'')
+    # %d - Day of the month, zero-padded (01..31)
+    # %e - Day of the month, blank-padded ( 1..31)
+    # 
     # Examples
     #   
     #   date = PartialDate::Date.new {|d| d.year = 2012, d.month = 12, d.day = 31}
@@ -222,15 +258,17 @@ module PartialDate
     #   # => "2012-12-31"
     #
     # Returns string representation of date.
-    def to_s
-      result = ""
-      if value != 0
-        result = year.to_s.rjust(4, '0') if year != 0
-        result = result + "-" if result.length > 3 && month > 0
-        result = result + month.to_s.rjust(2, '0') if month > 0
-        result = result + "-" + day.to_s.rjust(2, '0') if day > 0
-        return result
+    def to_s(format = :default)
+      format = FORMATS[format] if format.is_a?(Symbol)
+
+      result = format.dup
+      FORMAT_METHODS.each_pair do |key, value|
+        result.gsub!( key, value.call( self )) if result.include? key
       end
+
+      # result.strip!
+      # result = result.gsub(/(\\A[\\/\\-,]+) | /, '') #any leading slashes, hyphens, or commas.
+      # result.gsub!(/[\\/\\-,]+\\z/, '') #any trailing slashes, hyphens, or commas.
       result
     end
 
@@ -240,24 +278,24 @@ module PartialDate
     #
     # Returns -1, 1, or 0
     def <=>(other_date)
-        (@bits << 1) <=> (other_date.bits << 1)
+      (@bits << 1) <=> (other_date.bits << 1)
     end
 
 
     def self.get_date(register)
-        date = (get_year(register) * 10000).abs + (get_month(register) * 100) + get_day(register) 
-        if get_sign(register) == 1
-          date * -1
-        else
-          date
-        end
+      date = (get_year(register) * 10000).abs + (get_month(register) * 100) + get_day(register) 
+      if get_sign(register) == 1
+        date * -1
+      else
+        date
+      end
     end
 
     def self.set_date(register, value)
-        register = (value < 0) ? set_sign(register, 1) : set_sign(register, 0)
-        register = set_year(register, (value.abs / 10000).abs)
-        register = set_month(register, ((value - (value / 10000).abs * 10000) / 100).abs)
-        register = set_day(register, value - (value / 100).abs * 100)
+      register = (value < 0) ? set_sign(register, 1) : set_sign(register, 0)
+      register = set_year(register, (value.abs / 10000).abs)
+      register = set_month(register, ((value - (value / 10000).abs * 10000) / 100).abs)
+      register = set_day(register, value - (value / 100).abs * 100)
     end
 
     def self.get_sign(register)

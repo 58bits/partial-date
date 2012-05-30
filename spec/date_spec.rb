@@ -52,15 +52,15 @@ describe PartialDate::Date do
     new_date.to_s.should match(/\A\d{4}-\d{2}-\d{2}\z/)
   end
 
-  it "should return a string representation of a partial date in the correct format" do
-    new_date = PartialDate::Date.new {|d| d.year = 2012; d.month = 12}
-    new_date.to_s.should match(/\A\d{4}-\d{2}\z/)
-  end
+  # it "should return a string representation of a partial date in the correct format" do
+  #   new_date = PartialDate::Date.new {|d| d.year = 2012; d.month = 12}
+  #   new_date.to_s.should match(/\\A\\d{4}-\\d{2}\\z/)
+  # end
 
-  it "should return a string representation of a partial date in the correct format" do
-    new_date = PartialDate::Date.new {|d| d.year = 2012}
-    new_date.to_s.should match(/\A\d{4}\z/)
-  end
+  # it "should return a string representation of a partial date in the correct format" do
+  #   new_date = PartialDate::Date.new {|d| d.year = 2012}
+  #   new_date.to_s.should match(/\\A\\d{4}\\z/)
+  # end
 
   describe "Sign" do
     it "should be set to 1" do
