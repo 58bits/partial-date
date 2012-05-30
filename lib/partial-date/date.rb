@@ -268,9 +268,10 @@ module PartialDate
 
       result.strip!
       # Remove any leading "/-," chars.
-      # Remove duplicate white spaces
-      # Remove any duplicate "/-," chars
+      # Remove double white spaces.
+      # Remove any duplicate "/-," chars and replace with the single char.
       # Remove any trailing "/-," chars.
+      # Anything else - the user is on their own ;-)
       result = result.gsub(/\A[\/,-]+/, '').gsub(/\s\s/, ' ').gsub(/[\/\-,]([\/\-,])/, '\1').gsub(/[\/,-]+\z/, '')
     end
 
