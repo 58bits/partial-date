@@ -47,20 +47,7 @@ describe PartialDate::Date do
     expect {new_date = PartialDate::Date.new {|d| d.value = 10485761232 }}.to raise_error(PartialDate::PartialDateError, "Date value must be an integer betwen -10485761231 and 10485761231")
   end
 
-  it "should return a string representation of date in the correct format" do
-    new_date = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 31}
-    new_date.to_s.should match(/\A\d{4}-\d{2}-\d{2}\z/)
-  end
 
-  # it "should return a string representation of a partial date in the correct format" do
-  #   new_date = PartialDate::Date.new {|d| d.year = 2012; d.month = 12}
-  #   new_date.to_s.should match(/\\A\\d{4}-\\d{2}\\z/)
-  # end
-
-  # it "should return a string representation of a partial date in the correct format" do
-  #   new_date = PartialDate::Date.new {|d| d.year = 2012}
-  #   new_date.to_s.should match(/\\A\\d{4}\\z/)
-  # end
 
   describe "Sign" do
     it "should be set to 1" do
@@ -89,6 +76,11 @@ describe PartialDate::Date do
 
     it "should raise an error if year is set to a value greater than 1048576" do
       expect {date.year = 1048577 }.to raise_error(PartialDate::YearError, "Year must be an integer from -1048576 to 1048576")
+    end
+
+    it "should allow a negative year to be set from the block" do
+      date = PartialDate::Date.new { |d| d.year = -1000 }
+      date.year.should == -1000
     end
 
     it "should return a postive year when a positive year is set" do
@@ -236,6 +228,19 @@ describe PartialDate::Date do
         a = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 30}
         b = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 30}
         a.should be == b
+    end
+  end
+
+  describe "String formats" do
+
+    it "should return a string representation of date in the correct format" do
+      new_date = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 31}
+      new_date.to_s.should match(/\A\d{4}-\d{2}-\d{2}\z/)
+    end
+
+    it "should have a minus sign in front of negative dates" do
+        date = PartialDate::Date.new { |d| d.year = -1000; d.month = 12; d.day = 1}
+        date.to_s.should start_with("-")
     end
   end
 end

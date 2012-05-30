@@ -39,10 +39,7 @@ module PartialDate
 
   FORMATS = { :default => "%Y-%m-%d", :short => "%d %m %Y", :medium => "%d %b %Y", :long => "%d %B %Y", :number => "%Y%m%d",  }
   FORMAT_METHODS = { 
-                      "%Y" => lambda do |d| 
-                        year = (d.year != 0) ? d.year.to_s.rjust(4, '0') : ""  
-                        (d.class.get_sign(d.bits) == 1) ? "-" + year : year 
-                      end,
+                      "%Y" => lambda { |d| (d.year != 0) ? d.year.to_s.rjust(4, '0') : ""},  
                       "%m" => lambda { |d| (d.month != 0) ? d.month.to_s.rjust(2, '0') : "" },
                       "%b" => lambda { |d| (d.month != 0) ? ABBR_MONTH_NAMES[d.month - 1] : "" },
                       "%B" => lambda { |d| (d.month != 0) ? MONTH_NAMES[d.month - 1] : "" },
@@ -269,13 +266,14 @@ module PartialDate
         result.gsub!( key, value.call( self )) if result.include? key
       end
 
-      result.strip!
       # Remove any leading "/-," chars.
       # Remove double white spaces.
       # Remove any duplicate "/-," chars and replace with the single char.
       # Remove any trailing "/-," chars.
-      # Anything else - the user is on their own ;-)
-      result = result.gsub(/\A[\/,-]+/, '').gsub(/\s\s/, ' ').gsub(/[\/\-,]([\/\-,])/, '\1').gsub(/[\/,-]+\z/, '')
+      # Anything else - you're on your own ;-)
+      lead_trim = (year != 0 && format.start_with?("%Y")) ? /\A[\/\,\s]+/ : /\A[\/\,\-\s]+/ 
+
+      result = result.gsub(lead_trim, '').gsub(/\s\s/, ' ').gsub(/[\/\-\,]([\/\-\,])/, '\1').gsub(/[\/\,\-]+\z/, '')
     end
 
     # Public: Spaceship operator for date comparisons. Comparisons 
