@@ -40,7 +40,7 @@ module PartialDate
   FORMATS = { :default => "%Y-%m-%d", :short => "%d %m %Y", :medium => "%d %b %Y", :long => "%d %B %Y", :number => "%Y%m%d",  }
   FORMAT_METHODS = { 
                       "%Y" => lambda { |d| (d.year != 0) ? d.year.to_s.rjust(4, '0') : ""  },
-                      "%m" => lambda { |d| (d.month != 0)? d.month.to_s.rjust(2, '0') : "" },
+                      "%m" => lambda { |d| (d.month != 0) ? d.month.to_s.rjust(2, '0') : "" },
                       "%b" => lambda { |d| (d.month != 0) ? ABBR_MONTH_NAMES[d.month - 1] : "" },
                       "%B" => lambda { |d| (d.month != 0) ? MONTH_NAMES[d.month - 1] : "" },
                       "%d" => lambda { |d| (d.day != 0) ? d.day.to_s.rjust(2, '0') : "" },
@@ -49,7 +49,7 @@ module PartialDate
 
                           
   MONTH_NAMES = %w[January, February, March, April, May, June, July, August, September, October, November, December]
-  ABBR_MONTH_NAMES = %w[Jan, Feb, Mar, Apr, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+  ABBR_MONTH_NAMES = %w[Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
   
   # Public: A class for handling partial date storage. Partial dates are stored
   # as an 8 digit integer with optional month and day values.
