@@ -39,7 +39,10 @@ module PartialDate
 
   FORMATS = { :default => "%Y-%m-%d", :short => "%d %m %Y", :medium => "%d %b %Y", :long => "%d %B %Y", :number => "%Y%m%d",  }
   FORMAT_METHODS = { 
-                      "%Y" => lambda { |d| (d.year != 0) ? d.year.to_s.rjust(4, '0') : ""  },
+                      "%Y" => lambda do |d| 
+                        year = (d.year != 0) ? d.year.to_s.rjust(4, '0') : ""  
+                        (d.class.get_sign(d.bits) == 1) ? "-" + year : year 
+                      end,
                       "%m" => lambda { |d| (d.month != 0) ? d.month.to_s.rjust(2, '0') : "" },
                       "%b" => lambda { |d| (d.month != 0) ? ABBR_MONTH_NAMES[d.month - 1] : "" },
                       "%B" => lambda { |d| (d.month != 0) ? MONTH_NAMES[d.month - 1] : "" },
