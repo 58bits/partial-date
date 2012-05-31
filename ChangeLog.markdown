@@ -1,5 +1,9 @@
 ### 1.1.9 / 2012-05-31
 
+* Implemented faster Date#.to_s method.
+
+### 1.1.9 / 2012-05-31
+
 * BugFix: to_s will preserve minus sign for negative year when formatter starts with %Y
 * BugFix: <=> correct for negative dates.
 
