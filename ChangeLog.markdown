@@ -1,4 +1,4 @@
-### 1.1.9 / 2012-05-31
+### 1.1.10 / 2012-06-01
 
 * Implemented faster Date#.to_s method.
 
