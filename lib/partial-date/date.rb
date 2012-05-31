@@ -212,9 +212,9 @@ module PartialDate
     # Public: Set the day portion of a partial date. Day is optional so zero, 
     # nil and empty strings are allowed.
     def day=(value)
-      raise DayError, "A month must be set before a day" if month == 0
-
       value = 0 if value.nil?
+
+      raise DayError, "A month must be set before a day" if month == 0 && value !=0
 
       if value.is_a?(String) 
         if value =~ /\A\d{1,2}\z/
@@ -272,7 +272,7 @@ module PartialDate
       # Remove any trailing "/-," chars.
       # Anything else - you're on your own ;-)
       lead_trim = (year != 0 && format.lstrip.start_with?("%Y")) ? /\A[\/\,\s]+/ : /\A[\/\,\-\s]+/ 
-      result = result.gsub(lead_trim, '').gsub(/\s\s/, ' ').gsub(/[\/\-\,]([\/\-\,])/, '\1').gsub(/[\/\,\-\s]+\z/, '')
+        result = result.gsub(lead_trim, '').gsub(/\s\s/, ' ').gsub(/[\/\-\,]([\/\-\,])/, '\1').gsub(/[\/\,\-\s]+\z/, '')
     end
 
     # Public: Spaceship operator for date comparisons. Comparisons 
