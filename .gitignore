@@ -1,4 +1,4 @@
-benchmark/tmp
+tmp/
 coverage/
 .yardoc/
 doc/
