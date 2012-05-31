@@ -22,6 +22,8 @@ module PartialDate
   YEAR_SHIFT = 9
   MONTH_SHIFT = 5
 
+  REMOVALS = /[\/\,\-\s]/
+
   # TODO: Implement i18n support detecting whether a load path has been set or not
   # and if not - setting it here to a default set of translations that match
   # the generally available tranlsations for localizing dates.
@@ -246,8 +248,8 @@ module PartialDate
     # %Y - Year with century (can be negative, 4 digits at least)
     #             -0001, 0000, 1995, 2009, 14292, etc.
     # %m - Month of the year, zero-padded (01..12)
-    # %B - The full month name (``January'')
-    # %b - The abbreviated month name (``Jan'')
+    # %B - The full month name ('January')
+    # %b - The abbreviated month name ('Jan')
     # %d - Day of the month, zero-padded (01..31)
     # %e - Day of the month, blank-padded ( 1..31)
     # 
@@ -259,6 +261,35 @@ module PartialDate
     #
     # Returns string representation of date.
     def to_s(format = :default)
+      format = FORMATS[format] if format.is_a?(Symbol)
+
+      s = format.dup
+
+      n = b = 0
+      a = 1
+      while n < s.length
+        if s[n] == "%"
+          t = FORMAT_METHODS[s[n..n+1]].call( self )
+          if t.length == 0  
+            if n >= 0 && n < s.length - 2
+              a = a + 1 if s[n+2] =~ REMOVALS
+            else
+              b = n - 1 if s[n-1] =~ REMOVALS
+            end
+          end
+          s.slice!(b..n+a)
+          s.insert(b, t)
+          n = b = b + t.length 
+          a = 1 
+        else
+          n = b += 1
+        end
+      end
+      s
+    end
+    
+    # Here for the moment for benchmark comparisons
+    def old_to_s(format = :default)
       format = FORMATS[format] if format.is_a?(Symbol)
 
       result = format.dup
@@ -274,7 +305,7 @@ module PartialDate
       lead_trim = (year != 0 && format.lstrip.start_with?("%Y")) ? /\A[\/\,\s]+/ : /\A[\/\,\-\s]+/ 
         result = result.gsub(lead_trim, '').gsub(/\s\s/, ' ').gsub(/[\/\-\,]([\/\-\,])/, '\1').gsub(/[\/\,\-\s]+\z/, '')
     end
-
+    
     # Public: Spaceship operator for date comparisons. Comparisons 
     # are made by cascading down from year, to month to day. This
     # should be faster than passing to self.value <=> other_date.value

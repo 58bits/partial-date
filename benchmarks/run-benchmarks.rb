@@ -47,13 +47,15 @@ class PartialDateBenchmarks
     end
 
     bench('(5a) call stdlib date strftime') do |d|
-      d = Date.new(2012,12,1)
-      d.strftime('%Y-%m-%d')
+      stdlib_date.strftime('%Y-%m-%d')
     end
 
-    bench('(5b) call partial-date default to_s') do |d|
-      d = PartialDate::Date.new { |d| d.year = 2012; d.month = 12; d.day = 1 }
-      d.to_s
+    bench('(5b) call partial-date to_s') do |d|
+      partial_date.to_s
+    end
+
+    bench('(5c) call partial-date old to_s') do |d|
+      partial_date.old_to_s
     end
   end
 
