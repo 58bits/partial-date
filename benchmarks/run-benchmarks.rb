@@ -8,8 +8,11 @@ require 'date'
 
 class PartialDateBenchmarks
   def initialize(iterations)
-    @iterations = (iterations || 1000).to_i
+    @iterations = (iterations || 10000).to_i
     @benches    = []
+
+    stdlib_date = Date.new(2012,12,1)
+    partial_date = PartialDate::Date.new {|d| d.year = 2012; d.month = 12; d.day = 1}
 
     bench('(1a) create empty stdlib date objects')  do |d|
       Date.new
@@ -31,16 +34,27 @@ class PartialDateBenchmarks
       PartialDate::Date.load 20121201
     end
 
-    bench('(4a) call stdlib date strftime') do |d|
+    bench('(4a) read stdlib date parts') do |d|
+      stdlib_date.year
+      stdlib_date.month
+      stdlib_date.day
+    end
+
+    bench('(4b) read partial-date date parts') do |d|
+      partial_date.year
+      partial_date.month
+      partial_date.day
+    end
+
+    bench('(5a) call stdlib date strftime') do |d|
       d = Date.new(2012,12,1)
       d.strftime('%Y-%m-%d')
     end
 
-    bench('(4b) call partial-date default to_s') do |d|
+    bench('(5b) call partial-date default to_s') do |d|
       d = PartialDate::Date.new { |d| d.year = 2012; d.month = 12; d.day = 1 }
       d.to_s
     end
-
   end
 
   def run

@@ -145,7 +145,7 @@ module PartialDate
       if value.is_a?(Integer) && (value >= -10485761231 && value <= 10485761231)
         @bits = self.class.set_date(@bits, value)
       else
-        raise PartialDateError, "Date value must be an integer betwen -10485761231 and 10485761231"
+         raise PartialDateError, "Date value must be an integer betwen -10485761231 and 10485761231"
       end
     end
 
