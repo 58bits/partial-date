@@ -3,6 +3,12 @@
 require 'rubygems'
 require 'rake'
 
+# Benchmark setup inspired by https://github.com/stonean/slim
+desc 'Run PartialDate benchmarks (default iterations=1000)'
+task :benchmark, :iterations do
+  ruby('benchmarks/run-benchmarks.rb')
+end
+
 begin
   gem 'rubygems-tasks', '~> 0.2'
   require 'rubygems/tasks'
