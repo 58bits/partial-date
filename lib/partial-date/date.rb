@@ -262,9 +262,7 @@ module PartialDate
     # Returns string representation of date.
     def to_s(format = :default)
       format = FORMATS[format] if format.is_a?(Symbol)
-
       s = format.dup
-
       n = b = 0
       a = 1
       while n < s.length
