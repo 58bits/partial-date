@@ -4,6 +4,7 @@ require 'rubygems'
 require 'rake'
 
 # Benchmark setup inspired by https://github.com/stonean/slim
+# Call 'rake benchmark iterations=10000' to set iterations
 desc 'Run PartialDate benchmarks (default iterations=1000)'
 task :benchmark, :iterations do
   ruby('benchmarks/run-benchmarks.rb')
