@@ -267,8 +267,8 @@ module PartialDate
       n = b = 0
       a = 1
       while n < s.length
-        if s[n] == "%"
-          t = FORMAT_METHODS[s[n..n+1]].call( self )
+        if s[n] == "%" && FORMAT_METHODS.include?(s[n..n+1])
+          t = FORMAT_METHODS[s[n..n+1]].call( self ) 
           if t.length == 0  
             if n >= 0 && n < s.length - 2
               a = a + 1 if s[n+2] =~ REMOVALS
@@ -286,7 +286,7 @@ module PartialDate
       end
       s
     end
-    
+
     # Here for the moment for benchmark comparisons
     def old_to_s(format = :default)
       format = FORMATS[format] if format.is_a?(Symbol)
@@ -304,7 +304,7 @@ module PartialDate
       lead_trim = (year != 0 && format.lstrip.start_with?("%Y")) ? /\A[\/\,\s]+/ : /\A[\/\,\-\s]+/ 
         result = result.gsub(lead_trim, '').gsub(/\s\s/, ' ').gsub(/[\/\-\,]([\/\-\,])/, '\1').gsub(/[\/\,\-\s]+\z/, '')
     end
-    
+
     # Public: Spaceship operator for date comparisons. Comparisons 
     # are made by cascading down from year, to month to day. This
     # should be faster than passing to self.value <=> other_date.value
