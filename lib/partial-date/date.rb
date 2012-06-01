@@ -53,11 +53,27 @@ module PartialDate
   MONTH_NAMES = %w[January, February, March, April, May, June, July, August, September, October, November, December]
   ABBR_MONTH_NAMES = %w[Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
   
-  # Public: A class for handling partial date storage. Partial dates are stored
-  # as an 8 digit integer with optional month and day values.
+  # Public: A class for handling partial dates. Year (including negative 
+  # values), month and day are optional although month must be set before 
+  # day. Partial dates are stored internally in a single integer bit store
+  # using bitmask and bitwise operations to set and get year, month, and 
+  # day values.
+  #
+  # A numerical (human readable) date value can be retrieved via 
+  # the d.value accessor.
+  #
+  # Use d.value to get and set the numerical date value as well as for storing
+  # dates as a single value in a persistence store.
   #
   # Examples
   #   
+  #   date = PartialDate::Date.new
+  #   date.value = 20121201
+  #   # => 2012-12-01
+  #
+  #   date = PartialDate::Date.load 20121201
+  #   # => 2012-12-01
+  #
   #   date = PartialDate::Date.new
   #   date.year = 2012
   #   date.month = 12
@@ -71,9 +87,6 @@ module PartialDate
     include Comparable
 
     # Public: Readonly accessor for the raw bit integer date value.
-    # This allows us to perform our <=> comparions against this 
-    # value instead of comparing year, month and day, or date.value
-    # which requires multiplication to calculate.
     #
     # Returns the single Integer backing store with 'bits' flipped 
     # for year, month and day.
@@ -109,7 +122,7 @@ module PartialDate
     #
     #   date = PartialDate::Date.load 201212201
     #   date.value
-    #   # => 20120000
+    #   # => 20121200
     #   date.year
     #   # => 2012
     #   date.month
