@@ -243,9 +243,10 @@ module PartialDate
       self.class.get_day(@bits)
     end
 
-    # Public: Returns a formatted string representation of the partial date. 
-    # A subset of date formatters have been implementes incuding:
-    # %Y - Year with century (can be negative, 4 digits at least)
+    # Public: Returns a formatted string representation of date. 
+    # A subset of date formatters have been implemented including:
+    # %Y - Year with century (can be negative, and will be padded 
+    # to 4 digits at least)
     #             -0001, 0000, 1995, 2009, 14292, etc.
     # %m - Month of the year, zero-padded (01..12)
     # %B - The full month name ('January')
