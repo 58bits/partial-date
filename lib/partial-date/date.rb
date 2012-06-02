@@ -39,7 +39,14 @@ module PartialDate
   #   end
   # end
 
-  FORMATS = { :default => "%Y-%m-%d", :short => "%d %m %Y", :medium => "%d %b %Y", :long => "%d %B %Y", :number => "%Y%m%d",  }
+  FORMATS = { 
+              :default => "%Y-%m-%d", 
+              :short => "%d %m %Y", 
+              :medium => "%d %b %Y", 
+              :long => "%d %B %Y", 
+              :number => "%Y%m%d"  
+            }
+
   FORMAT_METHODS = { 
                       "%Y" => lambda { |d| (d.year != 0) ? d.year.to_s.rjust(4, '0') : ""},  
                       "%m" => lambda { |d| (d.month != 0) ? d.month.to_s.rjust(2, '0') : "" },
@@ -256,10 +263,10 @@ module PartialDate
       self.class.get_day(@bits)
     end
 
-    # Public: Returns a formatted string representation of date. 
-    # A subset of date formatters have been implemented including:
-    # %Y - Year with century (can be negative, and will be padded 
-    # to 4 digits at least)
+    # Public: Returns a formatted string representation of date. A subset of 
+    # date formatters have been implemented including: 
+    # %Y - Year with century
+    # (can be negative, and will be padded to 4 digits at least)
     #             -0001, 0000, 1995, 2009, 14292, etc.
     # %m - Month of the year, zero-padded (01..12)
     # %B - The full month name ('January')
@@ -318,11 +325,10 @@ module PartialDate
         result = result.gsub(lead_trim, '').gsub(/\s\s/, ' ').gsub(/[\/\-\,]([\/\-\,])/, '\1').gsub(/[\/\,\-\s]+\z/, '')
     end
 
-    # Public: Spaceship operator for date comparisons. Comparisons 
-    # are made by cascading down from year, to month to day. This
-    # should be faster than passing to self.value <=> other_date.value
-    # since the integer value attribute requires multiplication to
-    # calculate.
+    # Public: Spaceship operator for date comparisons. Comparisons are made 
+    # by cascading down from year, to month to day. This should be faster 
+    # than passing to self.value <=> other_date.value since the integer value 
+    # attribute requires multiplication to calculate.
     #
     # Returns -1, 1, or 0
     def <=>(other_date)
