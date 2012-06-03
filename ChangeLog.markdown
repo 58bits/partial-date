@@ -1,3 +1,8 @@
+### 1.2.0 / 2012-06-03
+
+* Documentation and comment clean-up
+* Implemented guard on to_s for unknown % tokens.
+
 ### 1.1.10 / 2012-06-01
 
 * Implemented faster Date#.to_s method.
