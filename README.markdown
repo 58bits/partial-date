@@ -4,8 +4,6 @@
 
 * [Homepage](https://github.com/58bits/partial-date#readme)
 * [Issues](https://github.com/58bits/partial-date/issues)
-* [Documentation](http://rubydoc.info/gems/partial-date/frames)
-
 
 ## Description
 
