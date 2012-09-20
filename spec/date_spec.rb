@@ -19,13 +19,13 @@ describe PartialDate::Date do
   end
 
   it "should allow construction from a block of integers" do
-    new_date = PartialDate::Date.new {|d| d.year = 2010; d.month = 12; d.day = 1}
-    new_date.value.should == 20101201
+    new_date = PartialDate::Date.new {|d| d.year = 2010; d.month = 11; d.day = 1}
+    new_date.value.should == 20101101
   end
 
   it "should allow construction from a block of strings" do
-    new_date = PartialDate::Date.new {|d| d.year = "2010"; d.month = "12"; d.day = "1"}
-    new_date.value.should == 20101201
+    new_date = PartialDate::Date.new {|d| d.year = "2010"; d.month = "11"; d.day = "1"}
+    new_date.value.should == 20101101
   end
 
   it "should allow construction from the class load method" do
