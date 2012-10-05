@@ -1,3 +1,6 @@
+### 1.2.1 / 2012-10-05
+* Bugfix: Merged pull request and bugfix for zero day mask. Thank you Alexander Gräfe. https://github.com/rickenharp
+
 ### 1.2.0 / 2012-06-03
 
 * Documentation and comment clean-up
