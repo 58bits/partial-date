@@ -1,3 +1,6 @@
+### 1.2.2 / 2013-01-27
+* Added aditional guards against empty strings for year, month, day.
+
 ### 1.2.1 / 2012-10-05
 * Bugfix: Merged pull request and bugfix for zero day mask. Thank you Alexander Gräfe. https://github.com/rickenharp
 
