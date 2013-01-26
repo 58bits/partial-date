@@ -186,14 +186,16 @@ module PartialDate
       value = 0 if value.nil?
 
       if value.is_a?(String) 
-        if value =~ /\A\-?\d{1,7}\z/
+        if value.length == 0
+          value = 0
+        elsif value =~ /\A\-?\d{1,7}\z/
           value = value.to_i
         else
           raise YearError, "Year must be a valid string or integer from -1048576 to 1048576"
         end
       end
 
-      if value.is_a?(Integer) && (value >= -1048576 && value <= 1048576) 
+      if (value >= -1048576 && value <= 1048576) 
         @bits = self.class.set_year(@bits, value)
       else
         raise YearError, "Year must be an integer from -1048576 to 1048576"
@@ -210,14 +212,16 @@ module PartialDate
       value = 0 if value.nil?
 
       if value.is_a?(String) 
-        if value =~ /\A\d{1,2}\z/ 
+        if value.length == 0
+          value = 0
+        elsif value =~ /\A\d{1,2}\z/ 
           value = value.to_i
         else
           raise MonthError, "Month must be a valid one or two digit string or integer between 0 and 12"
         end
       end
 
-      if value.is_a?(Integer) && (value >= 0 && value <= 12)
+      if (value >= 0 && value <= 12)
         @bits = self.class.set_month(@bits, value)
         @bits = self.class.set_day(@bits, 0) if value == 0
       else
@@ -236,17 +240,18 @@ module PartialDate
     def day=(value)
       value = 0 if value.nil?
 
-      raise DayError, "A month must be set before a day" if month == 0 && value !=0
-
       if value.is_a?(String) 
-        if value =~ /\A\d{1,2}\z/
+        if value.length == 0
+          value = 0
+        elsif value =~ /\A\d{1,2}\z/
           value = value.to_i
         else
           raise DayError, "Day must be a valid one or two digit string or integer between 0 and 31"
         end
       end
 
-      if value.is_a?(Integer) && (value >= 0 && value <= 31)
+      if (value >= 0 && value <= 31)
+        raise DayError, "A month must be set before a day" if month == 0 && value !=0
         begin
           date = ::Date.civil(self.year, self.month, value) if value > 0
           @bits = self.class.set_day(@bits, value)
