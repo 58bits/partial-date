@@ -1,3 +1,6 @@
+### 1.2.3 / 2016-01-12
+* Added final commas to MONTH_NAMES and ABBR_MONTH_NAMES
+
 ### 1.2.2 / 2013-01-27
 * Added aditional guards against empty strings for year, month, day.
 
@@ -34,7 +37,7 @@
 ### 1.1.5 / 2012-05-30
 
 * Allow negative years and year range from -1048576 to 1048576 (20 bits).
-* Implemented negative year with signing mask. 
+* Implemented negative year with signing mask.
 * Year is no longer mandatory
 * Created more specific error classes
 * Implemented readonly attribute Date#bits to allow public access to the bit store for comparison in <=>.
@@ -63,8 +66,8 @@
 ### 1.1.0 / 2012-05-27
 
 * Implemented a 23 bit store as backing store for date,
-reducing the storage requirements and increasing performance 
-of date objects. 
+reducing the storage requirements and increasing performance
+of date objects.
 
 ### 1.0.0 / 2012-05-27
 
@@ -75,4 +78,3 @@ values for better performance.
 ### 0.1.0 / 2012-05-26
 
 * Initial release:
-
