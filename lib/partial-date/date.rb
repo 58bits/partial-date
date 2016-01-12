@@ -57,8 +57,8 @@ module PartialDate
                     }
 
                           
-  MONTH_NAMES = %w[January, February, March, April, May, June, July, August, September, October, November, December]
-  ABBR_MONTH_NAMES = %w[Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+  MONTH_NAMES = %w[January, February, March, April, May, June, July, August, September, October, November, December,]
+  ABBR_MONTH_NAMES = %w[Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec,]
   
   # Public: A class for handling partial dates. Year (including negative 
   # values), month and day are optional although month must be set before 
